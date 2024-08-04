@@ -1,17 +1,17 @@
-# Shai Flow File
+# Shflow Flow File
 
-A flow file is the blueprint to create and run workflow with shflow.
+A flow file is the blueprint to build and run workflow with shflow.
 
 ## Table of Contents
 
 - [Format](#format)
 - [Examples](#examples)
 - [Instructions](#instructions)
-    - [FROM (Required)](#from-required)
-        - [Build from llama3](#build-from-llama3)
-        - [Build from a bin file](#build-from-a-bin-file)
-    - [PARAMETER](#parameter)
-        - [Valid Parameters and Values](#valid-parameters-and-values)
+    - [FROM](#from)
+    - [AGENT](#agent)
+    - [TASK](#task)
+    - [TOOL](#tool)
+    - [CREW](#crew)
 - [Notes](#notes)
 
 ## Format
@@ -41,7 +41,7 @@ TBD
 To use this:
 
 1. Save it as a file (e.g. `flowfile`)
-2. `shflow create choose-a-workflow-name -f <location of the file e.g. ./flowfile>'`
+2. `shflow build choose-a-workflow-name -f <location of the file e.g. ./flowfile>'`
 3. `shflow run choose-a-workflow-name`
 
 More examples are available in the [examples directory](../examples).
@@ -54,7 +54,7 @@ To view the flowfile of a given workflow, use the `shflow show --flowfile` comma
 
 ## Instructions
 
-### FROM (Required)
+### FROM
 
 The `FROM` instruction defines the base workflow to use when creating a workflow.
 
@@ -80,3 +80,7 @@ PARAMETER <parameter> <parametervalue>
 
 - the **`flowfile` is not case sensitive**. In the examples, uppercase instructions are used to make it easier to distinguish it from arguments.
 - Instructions can be in any order. In the examples, the `FROM` instruction is first to keep it easily readable.
+
+## Reference
+
+- [crewai](https://github.com/crewAIInc/crewAI)

@@ -24,8 +24,44 @@ For more examples, see the [examples](examples) directory. For more information 
 
 ## CLI Reference
 
+### Build a workflow
+
+`shflow build` is used to buld a workflow from a flowfile.
+
+```bash
+shflow build myworkflow -f ./flowfile
 ```
-TBD
+
+### Train a workflow
+
+`shflow train` is used to train a workflow.
+
+```bash
+shflow train myworkflow
+```
+
+### Test a workflow
+
+`shflow test` is used to test a workflow.
+
+```bash
+shflow test myworkflow
+```
+
+### Run a workflow
+
+`shflow run` is used to run a workflow.
+
+```bash
+shflow run myworkflow
+```
+
+### Compose workflows
+
+`shflow compose` is used to compose workflows.
+
+```bash
+shflow compose -f ./flowcompose.yml
 ```
 
 ## Building
@@ -42,5 +78,9 @@ Project License can be found [here](LICENSE).
 
 ## Reference
 
+- [autogen](https://github.com/microsoft/autogen)
+- [crewai](https://github.com/crewAIInc/crewAI)
 - [dockerfile](https://docs.docker.com/reference/dockerfile/)
+- [langchain](https://python.langchain.com/)
+- [llama-agents](https://github.com/run-llama/llama-agents)
 - [modelfile](https://github.com/ollama/ollama/blob/main/docs/modelfile.md)

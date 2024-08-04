@@ -10,6 +10,7 @@
 
 * [API Reference](./api.md)
 * [Flowfile Reference](./flowfile.md)
+* [Flow Compose Reference](./flowcompose.md)
 
 ### Resources
 
