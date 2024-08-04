@@ -24,36 +24,44 @@ For more examples, see the [examples](examples) directory. For more information 
 
 ## CLI Reference
 
-### Build a workflow
+### Build workflow
 
-`shflow build` is used to buld a workflow from a flowfile.
+`shflow build` is used to build workflow from a flowfile.
 
 ```bash
 shflow build myworkflow -f ./flowfile
 ```
 
-### Train a workflow
+### Train workflow
 
-`shflow train` is used to train a workflow.
+`shflow train` is used to train workflow.
 
 ```bash
 shflow train myworkflow
 ```
 
-### Test a workflow
+### Test workflow
 
-`shflow test` is used to test a workflow.
+`shflow test` is used to test workflow.
 
 ```bash
 shflow test myworkflow
 ```
 
-### Run a workflow
+### Run workflow
 
-`shflow run` is used to run a workflow.
+`shflow run` is used to run workflow.
 
 ```bash
 shflow run myworkflow
+```
+
+### Show workflow
+
+`shflow show` is used to show workflow.
+
+```bash
+shflow show --flowfile
 ```
 
 ### Compose workflows
