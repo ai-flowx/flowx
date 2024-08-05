@@ -24,6 +24,14 @@ For more examples, see the [examples](examples) directory. For more information 
 
 ## CLI Reference
 
+### Init task
+
+`shflow init` is used to init task.
+
+```bash
+shflow init mytask
+```
+
 ### Build workflow
 
 `shflow build` is used to build workflow from a flowfile.
