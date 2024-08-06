@@ -95,6 +95,7 @@ Project License can be found [here](LICENSE).
 ## Reference
 
 - [autogen](https://github.com/microsoft/autogen)
+- [cobra-cli](https://github.com/spf13/cobra-cli)
 - [crewai](https://github.com/crewAIInc/crewAI)
 - [dockerfile](https://docs.docker.com/reference/dockerfile/)
 - [langchain](https://python.langchain.com/)
