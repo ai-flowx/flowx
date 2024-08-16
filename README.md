@@ -98,6 +98,6 @@ Project License can be found [here](LICENSE).
 - [cobra-cli](https://github.com/spf13/cobra-cli)
 - [crewai](https://github.com/crewAIInc/crewAI)
 - [dockerfile](https://docs.docker.com/reference/dockerfile/)
-- [langchain](https://python.langchain.com/)
+- [langchain-agents](https://www.langchain.com/agents)
 - [llama-agents](https://github.com/run-llama/llama-agents)
 - [modelfile](https://github.com/ollama/ollama/blob/main/docs/modelfile.md)
