@@ -1,14 +1,14 @@
 # shflow
 
-[![Build Status](https://github.com/cligpt/shflow/workflows/ci/badge.svg?branch=main&event=push)](https://github.com/cligpt/shflow/actions?query=workflow%3Aci)
-[![codecov](https://codecov.io/gh/cligpt/shflow/branch/main/graph/badge.svg?token=El8oiyaIsD)](https://codecov.io/gh/cligpt/shflow)
-[![Go Report Card](https://goreportcard.com/badge/github.com/cligpt/shflow)](https://goreportcard.com/report/github.com/cligpt/shflow)
-[![License](https://img.shields.io/github/license/cligpt/shflow.svg)](https://github.com/cligpt/shflow/blob/main/LICENSE)
-[![Tag](https://img.shields.io/github/tag/cligpt/shflow.svg)](https://github.com/cligpt/shflow/tags)
+[![Build Status](https://github.com/ai-shflow/shflow/workflows/ci/badge.svg?branch=main&event=push)](https://github.com/ai-shflow/shflow/actions?query=workflow%3Aci)
+[![codecov](https://codecov.io/gh/ai-shflow/shflow/branch/main/graph/badge.svg?token=El8oiyaIsD)](https://codecov.io/gh/ai-shflow/shflow)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ai-shflow/shflow)](https://goreportcard.com/report/github.com/ai-shflow/shflow)
+[![License](https://img.shields.io/github/license/ai-shflow/shflow.svg)](https://github.com/ai-shflow/shflow/blob/main/LICENSE)
+[![Tag](https://img.shields.io/github/tag/ai-shflow/shflow.svg)](https://github.com/ai-shflow/shflow/tags)
 
 ## Introduction
 
-*shflow* is the workflow toolchain of [shai](https://github.com/cligpt/shai) written in Go.
+*shflow* is ai framework of [ai-shflow](https://github.com/ai-shflow) written in Go.
 
 ## Prerequisites
 
@@ -82,7 +82,7 @@ shflow compose -f ./flowcompose.yml
 
 ## Building
 
-See the [developer guide](https://github.com/cligpt/shflow/blob/main/docs/development.md)
+See the [developer guide](https://github.com/ai-shflow/shflow/blob/main/docs/development.md)
 
 ## REST API
 
