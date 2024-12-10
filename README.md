@@ -8,7 +8,7 @@
 
 ## Introduction
 
-*shflow* is ai framework of [ai-flowx](https://github.com/ai-flowx) written in Go.
+*shflow* is the ai framework of [ai-flowx](https://github.com/ai-flowx) written in Go.
 
 ## Prerequisites
 
