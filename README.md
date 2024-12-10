@@ -6,17 +6,33 @@
 [![License](https://img.shields.io/github/license/ai-flowx/shflow.svg)](https://github.com/ai-flowx/shflow/blob/main/LICENSE)
 [![Tag](https://img.shields.io/github/tag/ai-flowx/shflow.svg)](https://github.com/ai-flowx/shflow/tags)
 
+
+
 ## Introduction
 
 *shflow* is the ai framework of [ai-flowx](https://github.com/ai-flowx) written in Go.
+
+
 
 ## Prerequisites
 
 - Go >= 1.22.0
 
+
+
+## Build
+
+```bash
+version=latest make build
+```
+
+
+
 ## License
 
 Project License can be found [here](LICENSE).
+
+
 
 ## Reference
 
