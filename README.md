@@ -1,98 +1,26 @@
 # shflow
 
-[![Build Status](https://github.com/ai-shflow/shflow/workflows/ci/badge.svg?branch=main&event=push)](https://github.com/ai-shflow/shflow/actions?query=workflow%3Aci)
-[![codecov](https://codecov.io/gh/ai-shflow/shflow/branch/main/graph/badge.svg?token=El8oiyaIsD)](https://codecov.io/gh/ai-shflow/shflow)
-[![Go Report Card](https://goreportcard.com/badge/github.com/ai-shflow/shflow)](https://goreportcard.com/report/github.com/ai-shflow/shflow)
-[![License](https://img.shields.io/github/license/ai-shflow/shflow.svg)](https://github.com/ai-shflow/shflow/blob/main/LICENSE)
-[![Tag](https://img.shields.io/github/tag/ai-shflow/shflow.svg)](https://github.com/ai-shflow/shflow/tags)
+[![Build Status](https://github.com/ai-flowx/shflow/workflows/ci/badge.svg?branch=main&event=push)](https://github.com/ai-flowx/shflow/actions?query=workflow%3Aci)
+[![codecov](https://codecov.io/gh/ai-flowx/shflow/branch/main/graph/badge.svg?token=El8oiyaIsD)](https://codecov.io/gh/ai-flowx/shflow)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ai-flowx/shflow)](https://goreportcard.com/report/github.com/ai-flowx/shflow)
+[![License](https://img.shields.io/github/license/ai-flowx/shflow.svg)](https://github.com/ai-flowx/shflow/blob/main/LICENSE)
+[![Tag](https://img.shields.io/github/tag/ai-flowx/shflow.svg)](https://github.com/ai-flowx/shflow/tags)
 
 ## Introduction
 
-*shflow* is ai framework of [ai-shflow](https://github.com/ai-shflow) written in Go.
+*shflow* is ai framework of [ai-flowx](https://github.com/ai-flowx) written in Go.
 
 ## Prerequisites
 
 - Go >= 1.22.0
-
-## Quickstart
-
-```bash
-TBD
-```
-
-For more examples, see the [examples](examples) directory. For more information on working with a flowfile, see the [flowfile](docs/flowfile.md) documentation.
-
-## CLI Reference
-
-### Init task
-
-`shflow init` is used to init task.
-
-```bash
-shflow init mytask
-```
-
-### Build workflow
-
-`shflow build` is used to build workflow from a flowfile.
-
-```bash
-shflow build myworkflow -f ./flowfile
-```
-
-### Train workflow
-
-`shflow train` is used to train workflow.
-
-```bash
-shflow train myworkflow
-```
-
-### Test workflow
-
-`shflow test` is used to test workflow.
-
-```bash
-shflow test myworkflow
-```
-
-### Run workflow
-
-`shflow run` is used to run workflow.
-
-```bash
-shflow run myworkflow
-```
-
-### Show workflow
-
-`shflow show` is used to show workflow.
-
-```bash
-shflow show --flowfile
-```
-
-### Compose workflows
-
-`shflow compose` is used to compose workflows.
-
-```bash
-shflow compose -f ./flowcompose.yml
-```
-
-## Building
-
-See the [developer guide](https://github.com/ai-shflow/shflow/blob/main/docs/development.md)
-
-## REST API
-
-See the [API documentation](./docs/api.md) for all endpoints.
 
 ## License
 
 Project License can be found [here](LICENSE).
 
 ## Reference
+
+### Agent framework
 
 - [autogen](https://github.com/microsoft/autogen)
 - [cobra-cli](https://github.com/spf13/cobra-cli)
@@ -104,3 +32,9 @@ Project License can be found [here](LICENSE).
 - [llama-agents](https://github.com/run-llama/llama-agents)
 - [modelfile](https://github.com/ollama/ollama/blob/main/docs/modelfile.md)
 - [semantic-kernel](https://github.com/microsoft/semantic-kernel)
+
+### Agent protocol
+
+- [awesome-claude-mcp-servers](https://github.com/win4r/Awesome-Claude-MCP-Servers)
+- [claude-mcp](https://ai-claude.net/mcp/)
+- [langgraph-agent-protocol](https://github.com/langchain-ai/agent-protocol)
