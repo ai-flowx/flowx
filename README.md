@@ -35,6 +35,6 @@ Project License can be found [here](LICENSE).
 
 ### Agent protocol
 
-- [awesome-claude-mcp-servers](https://github.com/win4r/Awesome-Claude-MCP-Servers)
 - [claude-mcp](https://ai-claude.net/mcp/)
+- [claude-mcp-servers](https://github.com/modelcontextprotocol/servers)
 - [langgraph-agent-protocol](https://github.com/langchain-ai/agent-protocol)
