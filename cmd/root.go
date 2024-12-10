@@ -6,11 +6,11 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ai-flowx/shflow/config"
+	"github.com/ai-flowx/flowx/config"
 )
 
 var rootCmd = &cobra.Command{
-	Use:     "shflow",
+	Use:     "flowx",
 	Version: config.Version + "-build-" + config.Build,
 	Short:   "ai framework",
 	Long:    fmt.Sprintf("ai framework %s (%s %s)", config.Version, config.Commit, config.Build),

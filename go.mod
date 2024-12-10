@@ -1,4 +1,4 @@
-module github.com/ai-flowx/shflow
+module github.com/ai-flowx/flowx
 
 go 1.23.4
 

@@ -1,16 +1,16 @@
-# shflow
+# flowx
 
-[![Build Status](https://github.com/ai-flowx/shflow/workflows/ci/badge.svg?branch=main&event=push)](https://github.com/ai-flowx/shflow/actions?query=workflow%3Aci)
-[![codecov](https://codecov.io/gh/ai-flowx/shflow/branch/main/graph/badge.svg?token=El8oiyaIsD)](https://codecov.io/gh/ai-flowx/shflow)
-[![Go Report Card](https://goreportcard.com/badge/github.com/ai-flowx/shflow)](https://goreportcard.com/report/github.com/ai-flowx/shflow)
-[![License](https://img.shields.io/github/license/ai-flowx/shflow.svg)](https://github.com/ai-flowx/shflow/blob/main/LICENSE)
-[![Tag](https://img.shields.io/github/tag/ai-flowx/shflow.svg)](https://github.com/ai-flowx/shflow/tags)
+[![Build Status](https://github.com/ai-flowx/flowx/workflows/ci/badge.svg?branch=main&event=push)](https://github.com/ai-flowx/flowx/actions?query=workflow%3Aci)
+[![codecov](https://codecov.io/gh/ai-flowx/flowx/branch/main/graph/badge.svg?token=El8oiyaIsD)](https://codecov.io/gh/ai-flowx/flowx)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ai-flowx/flowx)](https://goreportcard.com/report/github.com/ai-flowx/flowx)
+[![License](https://img.shields.io/github/license/ai-flowx/flowx.svg)](https://github.com/ai-flowx/flowx/blob/main/LICENSE)
+[![Tag](https://img.shields.io/github/tag/ai-flowx/flowx.svg)](https://github.com/ai-flowx/flowx/tags)
 
 
 
 ## Introduction
 
-*shflow* is the ai framework of [ai-flowx](https://github.com/ai-flowx) written in Go.
+*flowx* is the ai framework of [ai-flowx](https://github.com/ai-flowx) written in Go.
 
 
 
