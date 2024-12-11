@@ -5,6 +5,8 @@ import (
 
 	"github.com/hashicorp/go-hclog"
 	"github.com/pkg/errors"
+
+	"github.com/ai-flowx/flowx/store"
 )
 
 const (
@@ -20,18 +22,10 @@ type Memory interface {
 	Search(context.Context, string, int, float64) ([]interface{}, error)
 }
 
-type Storage interface {
-	Init(context.Context) error
-	Deinit(context.Context) error
-	Reset(context.Context) error
-	Save(context.Context, interface{}, map[string]interface{}) error
-	Search(context.Context, string, int, float64) ([]interface{}, error)
-}
-
 type Config struct {
-	Addr    string
-	Logger  hclog.Logger
-	Storage Storage
+	Addr   string
+	Logger hclog.Logger
+	Store  store.Store
 }
 
 type memory struct {
@@ -48,24 +42,32 @@ func DefaultConfig() *Config {
 	return &Config{}
 }
 
-func (m *memory) Init(_ context.Context) error {
+func (m *memory) Init(ctx context.Context) error {
+	if err := m.cfg.Store.Init(ctx); err != nil {
+		return errors.Wrap(err, "failed to init\n")
+	}
+
 	return nil
 }
 
-func (m *memory) Deinit(_ context.Context) error {
+func (m *memory) Deinit(ctx context.Context) error {
+	if err := m.cfg.Store.Deinit(ctx); err != nil {
+		return errors.Wrap(err, "failed to deinit\n")
+	}
+
 	return nil
 }
 
-func (m *memory) Reset(_ context.Context) error {
+func (m *memory) Reset(ctx context.Context) error {
+	if err := m.cfg.Store.Reset(ctx); err != nil {
+		return errors.Wrap(err, "failed to reset\n")
+	}
+
 	return nil
 }
 
 func (m *memory) Save(ctx context.Context, value interface{}, meta map[string]interface{}, agent string) error {
-	if agent != "" {
-		meta["agent"] = agent
-	}
-
-	if err := m.cfg.Storage.Save(ctx, value, meta); err != nil {
+	if err := m.cfg.Store.Save(ctx, value, meta, agent); err != nil {
 		return errors.Wrap(err, "failed to save\n")
 	}
 
@@ -81,9 +83,9 @@ func (m *memory) Search(ctx context.Context, query string, limit int, threshold 
 		threshold = searchThreshold
 	}
 
-	buf, err := m.cfg.Storage.Search(ctx, query, limit, threshold)
+	buf, err := m.cfg.Store.Search(ctx, query, limit, threshold)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to save\n")
+		return nil, errors.Wrap(err, "failed to search\n")
 	}
 
 	return buf, nil

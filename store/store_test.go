@@ -1,4 +1,4 @@
-package memory
+package store
 
 import (
 	"testing"
@@ -6,22 +6,22 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestLongTermInit(t *testing.T) {
+func TestStoreInit(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
 
-func TestLongTermDeinit(t *testing.T) {
+func TestStoreDeinit(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
 
-func TestLongTermReset(t *testing.T) {
+func TestStoreReset(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
 
-func TestLongTermSave(t *testing.T) {
+func TestStoreSave(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
 
-func TestLongTermSearch(t *testing.T) {
+func TestStoreSearch(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }

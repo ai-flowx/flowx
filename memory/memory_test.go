@@ -6,22 +6,22 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestInit(t *testing.T) {
+func TestMemoryInit(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
 
-func TestDeinit(t *testing.T) {
+func TestMemoryDeinit(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
 
-func TestReset(t *testing.T) {
+func TestMemoryReset(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
 
-func TestSave(t *testing.T) {
+func TestMemorySave(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
 
-func TestSearch(t *testing.T) {
+func TestMemorySearch(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
