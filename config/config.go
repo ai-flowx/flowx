@@ -7,14 +7,14 @@ var (
 )
 
 type Config struct {
-	Cachex Cachex `yaml:"cachex"`
-	Ragx   Ragx   `yaml:"ragx"`
+	Cach Cache `yaml:"cache"`
+	Rag  Rag   `yaml:"rag"`
 }
 
-type Cachex struct {
+type Cache struct {
 	Url string `yaml:"url"`
 }
 
-type Ragx struct {
+type Rag struct {
 	Url string `yaml:"url"`
 }

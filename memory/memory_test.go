@@ -1,44 +1,27 @@
 package memory
 
 import (
-	"context"
+	"testing"
 
-	"github.com/hashicorp/go-hclog"
+	"github.com/stretchr/testify/assert"
 )
 
-type Memory interface {
-	Init(context.Context) error
-	Deinit(context.Context) error
-	Run(context.Context) error
+func TestInit(t *testing.T) {
+	assert.Equal(t, nil, nil)
 }
 
-type Config struct {
-	Addr   string
-	Logger hclog.Logger
+func TestDeinit(t *testing.T) {
+	assert.Equal(t, nil, nil)
 }
 
-type memory struct {
-	cfg *Config
+func TestReset(t *testing.T) {
+	assert.Equal(t, nil, nil)
 }
 
-func New(_ context.Context, cfg *Config) Memory {
-	return &memory{
-		cfg: cfg,
-	}
+func TestSave(t *testing.T) {
+	assert.Equal(t, nil, nil)
 }
 
-func DefaultConfig() *Config {
-	return &Config{}
-}
-
-func (m *memory) Init(_ context.Context) error {
-	return nil
-}
-
-func (m *memory) Deinit(_ context.Context) error {
-	return nil
-}
-
-func (m *memory) Run(ctx context.Context) error {
-	return nil
+func TestSearch(t *testing.T) {
+	assert.Equal(t, nil, nil)
 }
