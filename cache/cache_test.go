@@ -1,4 +1,4 @@
-package cachex
+package cache
 
 import (
 	"testing"
@@ -6,6 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCachex(t *testing.T) {
+func TestCache(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
