@@ -7,7 +7,6 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/hashicorp/go-hclog"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -18,7 +17,6 @@ import (
 )
 
 const (
-	logName    = "flowx"
 	routineNum = -1
 )
 
@@ -26,7 +24,6 @@ var (
 	configFile string
 	configData config.Config
 	listenAddr string
-	logLevel   string
 )
 
 var rootCmd = &cobra.Command{
@@ -40,12 +37,7 @@ var rootCmd = &cobra.Command{
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
-		l, err := initLogger(ctx)
-		if err != nil {
-			_, _ = fmt.Fprintln(os.Stderr, err.Error())
-			os.Exit(1)
-		}
-		f, err := initFlow(ctx, l)
+		f, err := initFlow(ctx)
 		if err != nil {
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
@@ -69,7 +61,6 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVarP(&configFile, "config-file", "c", "", "config file")
 	rootCmd.PersistentFlags().StringVarP(&listenAddr, "listen-addr", "u", "127.0.0.1:8080", "listen address")
-	rootCmd.PersistentFlags().StringVarP(&logLevel, "log-level", "l", "info", "log level (debug|info|warn|error)")
 
 	rootCmd.Root().CompletionOptions.DisableDefaultCmd = true
 }
@@ -87,22 +78,13 @@ func initConfig() {
 	}
 }
 
-func initLogger(_ context.Context) (hclog.Logger, error) {
-	return hclog.New(&hclog.LoggerOptions{
-		Name:  logName,
-		Level: hclog.LevelFromString(logLevel),
-	}), nil
-}
-
-func initFlow(ctx context.Context, logger hclog.Logger) (flow.Flow, error) {
+func initFlow(ctx context.Context) (flow.Flow, error) {
 	c := flow.DefaultConfig()
 	if c == nil {
 		return nil, errors.New("failed to config\n")
 	}
 
 	c.Addr = listenAddr
-	c.Logger = logger
-
 	c.Cache = configData.Cache
 	c.Gpt = configData.Gpt
 	c.Store = configData.Store

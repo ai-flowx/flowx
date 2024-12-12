@@ -2,8 +2,6 @@ package gpt
 
 import (
 	"context"
-
-	"github.com/hashicorp/go-hclog"
 )
 
 type Gpt interface {
@@ -12,9 +10,7 @@ type Gpt interface {
 	Run(context.Context) error
 }
 
-type Config struct {
-	Logger hclog.Logger
-}
+type Config struct{}
 
 type gpt struct {
 	cfg *Config

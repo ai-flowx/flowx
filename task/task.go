@@ -2,8 +2,6 @@ package task
 
 import (
 	"context"
-
-	"github.com/hashicorp/go-hclog"
 )
 
 type Task interface {
@@ -12,9 +10,7 @@ type Task interface {
 	Run(context.Context) error
 }
 
-type Config struct {
-	Logger hclog.Logger
-}
+type Config struct{}
 
 type task struct {
 	cfg *Config

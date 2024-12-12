@@ -2,8 +2,6 @@ package cache
 
 import (
 	"context"
-
-	"github.com/hashicorp/go-hclog"
 )
 
 type Cache interface {
@@ -12,9 +10,7 @@ type Cache interface {
 	Run(context.Context) error
 }
 
-type Config struct {
-	Logger hclog.Logger
-}
+type Config struct{}
 
 type cache struct {
 	cfg *Config

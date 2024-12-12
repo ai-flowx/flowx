@@ -3,7 +3,6 @@ package store
 import (
 	"context"
 
-	"github.com/hashicorp/go-hclog"
 	"github.com/pkg/errors"
 )
 
@@ -28,7 +27,6 @@ type Store interface {
 }
 
 type Config struct {
-	Logger   hclog.Logger
 	Provider string
 }
 

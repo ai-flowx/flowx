@@ -2,8 +2,6 @@ package tool
 
 import (
 	"context"
-
-	"github.com/hashicorp/go-hclog"
 )
 
 type Tool interface {
@@ -12,9 +10,7 @@ type Tool interface {
 	Run(context.Context) error
 }
 
-type Config struct {
-	Logger hclog.Logger
-}
+type Config struct{}
 
 type tool struct {
 	cfg *Config

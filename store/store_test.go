@@ -4,7 +4,6 @@ import (
 	"context"
 	"testing"
 
-	"github.com/hashicorp/go-hclog"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -14,10 +13,6 @@ const (
 
 func initStoreTest(_ context.Context) store {
 	cfg := Config{}
-
-	cfg.Logger = hclog.New(&hclog.LoggerOptions{
-		Name:  "store",
-		Level: hclog.LevelFromString("info")})
 	cfg.Provider = ProviderChroma
 
 	return store{

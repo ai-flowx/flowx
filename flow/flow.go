@@ -3,7 +3,6 @@ package flow
 import (
 	"context"
 
-	"github.com/hashicorp/go-hclog"
 	"golang.org/x/sync/errgroup"
 
 	"github.com/ai-flowx/flowx/config"
@@ -20,9 +19,7 @@ type Flow interface {
 }
 
 type Config struct {
-	Addr   string
-	Logger hclog.Logger
-
+	Addr  string
 	Cache []config.Cache
 	Gpt   []config.Gpt
 	Store []config.Store

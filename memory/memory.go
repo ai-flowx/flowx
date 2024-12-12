@@ -3,7 +3,6 @@ package memory
 import (
 	"context"
 
-	"github.com/hashicorp/go-hclog"
 	"github.com/pkg/errors"
 
 	"github.com/ai-flowx/flowx/store"
@@ -23,8 +22,7 @@ type Memory interface {
 }
 
 type Config struct {
-	Logger hclog.Logger
-	Store  store.Store
+	Store store.Store
 }
 
 type memory struct {

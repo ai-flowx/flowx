@@ -2,8 +2,6 @@ package proto
 
 import (
 	"context"
-
-	"github.com/hashicorp/go-hclog"
 )
 
 type Proto interface {
@@ -12,9 +10,7 @@ type Proto interface {
 	Run(context.Context) error
 }
 
-type Config struct {
-	Logger hclog.Logger
-}
+type Config struct{}
 
 type proto struct {
 	cfg *Config

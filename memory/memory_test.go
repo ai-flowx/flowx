@@ -4,28 +4,22 @@ import (
 	"context"
 	"testing"
 
-	"github.com/hashicorp/go-hclog"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/ai-flowx/flowx/store"
 )
 
 const (
-	valueTestMemory = "testMemory"
+	agentTestMemory = "testAgent"
+	taskTestMemory  = "testTask"
+	valueTestMemory = "testValue"
 )
 
 func initMemoryTest(ctx context.Context) memory {
-	cfg := Config{}
-
-	cfg.Logger = hclog.New(&hclog.LoggerOptions{
-		Name:  "memory",
-		Level: hclog.LevelFromString("info")})
-
 	c := store.DefaultConfig()
-	c.Logger = hclog.New(&hclog.LoggerOptions{
-		Name:  "store",
-		Level: hclog.LevelFromString("info")})
 	c.Provider = store.ProviderChroma
+
+	cfg := Config{}
 	cfg.Store = store.New(ctx, c)
 
 	return memory{
@@ -79,10 +73,10 @@ func TestMemorySave(t *testing.T) {
 
 	value := valueTestMemory
 	meta := map[string]interface{}{
-		"task":    "testTask",
+		"task":    taskTestMemory,
 		"quality": 0.5,
 	}
-	agent := "testAgent"
+	agent := agentTestMemory
 
 	err := m.Save(ctx, value, meta, agent)
 	assert.Equal(t, nil, err)

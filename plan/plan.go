@@ -2,8 +2,6 @@ package plan
 
 import (
 	"context"
-
-	"github.com/hashicorp/go-hclog"
 )
 
 type Plan interface {
@@ -12,9 +10,7 @@ type Plan interface {
 	Run(context.Context) error
 }
 
-type Config struct {
-	Logger hclog.Logger
-}
+type Config struct{}
 
 type plan struct {
 	cfg *Config

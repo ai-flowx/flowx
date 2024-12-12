@@ -4,55 +4,53 @@ import (
 	"context"
 	"testing"
 
-	"github.com/hashicorp/go-hclog"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/ai-flowx/flowx/store"
 )
 
 const (
-	valueTestShortTerm = "testShortTerm"
+	agentTestLongTerm = "testAgent"
+	taskTestLongTerm  = "testTask"
+	valueTestLongTerm = "testValue"
 )
 
-func initShortTermTest(ctx context.Context) ShortTerm {
+func initLongTermTest(ctx context.Context) LongTerm {
 	c := store.DefaultConfig()
-	c.Logger = hclog.New(&hclog.LoggerOptions{
-		Name:  "store",
-		Level: hclog.LevelFromString("info")})
 	c.Provider = store.ProviderChroma
 	s := store.New(ctx, c)
 
-	return ShortTerm{
+	return LongTerm{
 		Store: s,
 	}
 }
 
-func TestShortTermInit(t *testing.T) {
+func TestLongTermInit(t *testing.T) {
 	ctx := context.Background()
 
-	l := initShortTermTest(ctx)
+	l := initLongTermTest(ctx)
 
 	err := l.Init(ctx)
 	assert.Equal(t, nil, err)
 }
 
-func TestShortTermDeinit(t *testing.T) {
+func TestLongTermDeinit(t *testing.T) {
 	ctx := context.Background()
 
-	l := initShortTermTest(ctx)
+	l := initLongTermTest(ctx)
 
 	err := l.Deinit(ctx)
 	assert.Equal(t, nil, err)
 }
 
-func TestShortTermReset(t *testing.T) {
+func TestLongTermReset(t *testing.T) {
 	ctx := context.Background()
 
-	l := initShortTermTest(ctx)
+	l := initLongTermTest(ctx)
 
 	_ = l.Init(ctx)
 
-	defer func(l *ShortTerm, ctx context.Context) {
+	defer func(l *LongTerm, ctx context.Context) {
 		_ = l.Deinit(ctx)
 	}(&l, ctx)
 
@@ -60,39 +58,40 @@ func TestShortTermReset(t *testing.T) {
 	assert.Equal(t, nil, err)
 }
 
-func TestShortTermSave(t *testing.T) {
+func TestLongTermSave(t *testing.T) {
 	ctx := context.Background()
 
-	l := initShortTermTest(ctx)
+	l := initLongTermTest(ctx)
 
 	_ = l.Init(ctx)
 
-	defer func(l *ShortTerm, ctx context.Context) {
+	defer func(l *LongTerm, ctx context.Context) {
 		_ = l.Deinit(ctx)
 	}(&l, ctx)
 
-	value := valueTestShortTerm
+	value := valueTestLongTerm
 	meta := map[string]interface{}{
-		"task": "testTask",
+		"task":    taskTestLongTerm,
+		"quality": 0.5,
 	}
-	agent := "testAgent"
+	agent := agentTestLongTerm
 
 	err := l.Save(ctx, value, meta, agent)
 	assert.Equal(t, nil, err)
 }
 
-func TestShortTermSearch(t *testing.T) {
+func TestLongTermSearch(t *testing.T) {
 	ctx := context.Background()
 
-	l := initShortTermTest(ctx)
+	l := initLongTermTest(ctx)
 
 	_ = l.Init(ctx)
 
-	defer func(l *ShortTerm, ctx context.Context) {
+	defer func(l *LongTerm, ctx context.Context) {
 		_ = l.Deinit(ctx)
 	}(&l, ctx)
 
-	query := valueTestShortTerm
+	query := valueTestLongTerm
 	limit := 3
 	threshold := 0.35
 
