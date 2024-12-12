@@ -6,6 +6,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestFlow(t *testing.T) {
+func TestFlowInit(t *testing.T) {
+	assert.Equal(t, nil, nil)
+}
+
+func TestFlowDeinit(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }

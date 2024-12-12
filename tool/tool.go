@@ -13,7 +13,6 @@ type Tool interface {
 }
 
 type Config struct {
-	Addr   string
 	Logger hclog.Logger
 }
 

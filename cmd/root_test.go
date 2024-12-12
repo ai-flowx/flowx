@@ -17,6 +17,7 @@ func TestInitConfig(t *testing.T) {
 
 func TestInitLogger(t *testing.T) {
 	ctx := context.Background()
+
 	logLevel = levelInfo
 
 	_, err := initLogger(ctx)
@@ -25,7 +26,8 @@ func TestInitLogger(t *testing.T) {
 
 func TestInitFlow(t *testing.T) {
 	ctx := context.Background()
-	listenAddr = ":8080"
+
+	listenAddr = "127.0.0.1:8080"
 	logLevel = levelInfo
 
 	logger, err := initLogger(ctx)

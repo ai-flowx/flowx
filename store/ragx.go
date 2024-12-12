@@ -8,12 +8,6 @@ type Ragx struct {
 	Collection []Collection
 }
 
-type Collection struct {
-	Id   []string
-	Meta map[string]interface{}
-	Text string
-}
-
 func (r *Ragx) Init(_ context.Context) error {
 	return nil
 }

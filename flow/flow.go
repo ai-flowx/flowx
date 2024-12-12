@@ -4,8 +4,9 @@ import (
 	"context"
 
 	"github.com/hashicorp/go-hclog"
-	"github.com/pkg/errors"
 	"golang.org/x/sync/errgroup"
+
+	"github.com/ai-flowx/flowx/config"
 )
 
 const (
@@ -21,6 +22,10 @@ type Flow interface {
 type Config struct {
 	Addr   string
 	Logger hclog.Logger
+
+	Cache []config.Cache
+	Gpt   []config.Gpt
+	Store []config.Store
 }
 
 type flow struct {
@@ -46,18 +51,15 @@ func (f *flow) Deinit(_ context.Context) error {
 }
 
 func (f *flow) Run(ctx context.Context) error {
-	s := make(chan string, 1)
-
 	g, _ := errgroup.WithContext(ctx)
 	g.SetLimit(routineNum)
 
 	g.Go(func() error {
-		<-s
 		return nil
 	})
 
 	if err := g.Wait(); err != nil {
-		return errors.Wrap(err, "failed to wait\n")
+		return err
 	}
 
 	return nil

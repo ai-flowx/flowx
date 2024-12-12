@@ -13,7 +13,6 @@ type Task interface {
 }
 
 type Config struct {
-	Addr   string
 	Logger hclog.Logger
 }
 

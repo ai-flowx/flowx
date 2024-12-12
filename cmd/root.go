@@ -68,7 +68,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVarP(&configFile, "config-file", "c", "", "config file")
-	rootCmd.PersistentFlags().StringVarP(&listenAddr, "listen-addr", "u", ":8080", "listen address")
+	rootCmd.PersistentFlags().StringVarP(&listenAddr, "listen-addr", "u", "127.0.0.1:8080", "listen address")
 	rootCmd.PersistentFlags().StringVarP(&logLevel, "log-level", "l", "info", "log level (debug|info|warn|error)")
 
 	rootCmd.Root().CompletionOptions.DisableDefaultCmd = true
@@ -100,8 +100,12 @@ func initFlow(ctx context.Context, logger hclog.Logger) (flow.Flow, error) {
 		return nil, errors.New("failed to config\n")
 	}
 
-	c.Logger = logger
 	c.Addr = listenAddr
+	c.Logger = logger
+
+	c.Cache = configData.Cache
+	c.Gpt = configData.Gpt
+	c.Store = configData.Store
 
 	return flow.New(ctx, c), nil
 }
@@ -130,12 +134,14 @@ func runFlow(ctx context.Context, _flow flow.Flow) error {
 
 	g.Go(func() error {
 		<-s
-		_ = _flow.Deinit(ctx)
+		if err := _flow.Deinit(ctx); err != nil {
+			return errors.Wrap(err, "failed to deinit\n")
+		}
 		return nil
 	})
 
 	if err := g.Wait(); err != nil {
-		return errors.Wrap(err, "failed to wait\n")
+		return err
 	}
 
 	return nil

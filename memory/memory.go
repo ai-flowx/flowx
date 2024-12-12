@@ -23,7 +23,6 @@ type Memory interface {
 }
 
 type Config struct {
-	Addr   string
 	Logger hclog.Logger
 	Store  store.Store
 }

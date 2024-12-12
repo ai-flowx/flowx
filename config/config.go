@@ -7,14 +7,22 @@ var (
 )
 
 type Config struct {
-	Cach Cache `yaml:"cache"`
-	Rag  Rag   `yaml:"rag"`
+	Cache []Cache `yaml:"cache"`
+	Gpt   []Gpt   `yaml:"gpt"`
+	Store []Store `yaml:"store"`
 }
 
 type Cache struct {
-	Url string `yaml:"url"`
+	Provider string `yaml:"provider"`
+	Url      string `yaml:"url"`
 }
 
-type Rag struct {
-	Url string `yaml:"url"`
+type Gpt struct {
+	Provider string `yaml:"provider"`
+	Url      string `yaml:"url"`
+}
+
+type Store struct {
+	Provider string `yaml:"provider"`
+	Url      string `yaml:"url"`
 }

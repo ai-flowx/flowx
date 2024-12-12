@@ -1,4 +1,15 @@
 cache:
-  url: http://127.0.0.1:8080
-rag:
-  url: http://127.0.0.1:8081
+  - provider: cachex
+    url: http://127.0.0.1:8070
+  - provider: gptcache
+    url: http://127.0.0.1:8071
+gpt:
+  - provider: anthropic
+    url: https://api.anthropic.com/
+  - provider: openai
+    url: https://openai.com/api/
+store:
+  - provider: chroma
+    url: http://127.0.0.1:8090
+  - provider: ragx
+    url: http://127.0.0.1:8091
