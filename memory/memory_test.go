@@ -10,6 +10,9 @@ import (
 )
 
 const (
+	apiTestStore   = "http://127.0.0.1:8082/"
+	tokenTestStore = "token"
+
 	agentTestMemory = "testAgent"
 	taskTestMemory  = "testTask"
 	valueTestMemory = "testValue"
@@ -18,6 +21,8 @@ const (
 func initMemoryTest(ctx context.Context) memory {
 	c := store.DefaultConfig()
 	c.Provider = store.ProviderChroma
+	c.Api = apiTestStore
+	c.Token = tokenTestStore
 
 	cfg := Config{}
 	cfg.Store = store.New(ctx, c)

@@ -28,6 +28,8 @@ type Store interface {
 
 type Config struct {
 	Provider string
+	Api      string
+	Token    string
 }
 
 type Collection struct {
@@ -37,14 +39,14 @@ type Collection struct {
 }
 
 type store struct {
-	cfg    *Config
-	_store Store
+	cfg *Config
+	st  Store
 }
 
 func New(_ context.Context, cfg *Config) Store {
 	return &store{
-		cfg:    cfg,
-		_store: storeList[cfg.Provider],
+		cfg: cfg,
+		st:  storeList[cfg.Provider],
 	}
 }
 
@@ -53,11 +55,11 @@ func DefaultConfig() *Config {
 }
 
 func (s *store) Init(ctx context.Context) error {
-	if s._store == nil {
+	if s.st == nil {
 		return errors.New("invalid store\n")
 	}
 
-	if err := s._store.Init(ctx); err != nil {
+	if err := s.st.Init(ctx); err != nil {
 		return errors.Wrap(err, "failed to init\n")
 	}
 
@@ -65,8 +67,8 @@ func (s *store) Init(ctx context.Context) error {
 }
 
 func (s *store) Deinit(ctx context.Context) error {
-	if s._store != nil {
-		if err := s._store.Deinit(ctx); err != nil {
+	if s.st != nil {
+		if err := s.st.Deinit(ctx); err != nil {
 			return errors.Wrap(err, "failed to deinit\n")
 		}
 	}
@@ -75,7 +77,7 @@ func (s *store) Deinit(ctx context.Context) error {
 }
 
 func (s *store) Reset(ctx context.Context) error {
-	if err := s._store.Reset(ctx); err != nil {
+	if err := s.st.Reset(ctx); err != nil {
 		return errors.Wrap(err, "failed to reset\n")
 	}
 
@@ -83,7 +85,7 @@ func (s *store) Reset(ctx context.Context) error {
 }
 
 func (s *store) Save(ctx context.Context, value interface{}, meta map[string]interface{}, agent string) error {
-	if err := s._store.Save(ctx, value, meta, agent); err != nil {
+	if err := s.st.Save(ctx, value, meta, agent); err != nil {
 		return errors.Wrap(err, "failed to save\n")
 	}
 
@@ -91,7 +93,7 @@ func (s *store) Save(ctx context.Context, value interface{}, meta map[string]int
 }
 
 func (s *store) Search(ctx context.Context, query string, limit int, threshold float64) ([]interface{}, error) {
-	buf, err := s._store.Search(ctx, query, limit, threshold)
+	buf, err := s.st.Search(ctx, query, limit, threshold)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to search\n")
 	}

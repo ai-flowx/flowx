@@ -8,16 +8,20 @@ import (
 )
 
 const (
+	apiTestStore   = "http://127.0.0.1:8082/"
+	tokenTestStore = "token"
 	valueTestStore = "testStore"
 )
 
 func initStoreTest(_ context.Context) store {
 	cfg := Config{}
 	cfg.Provider = ProviderChroma
+	cfg.Api = apiTestStore
+	cfg.Token = tokenTestStore
 
 	return store{
-		cfg:    &cfg,
-		_store: storeList[cfg.Provider],
+		cfg: &cfg,
+		st:  storeList[cfg.Provider],
 	}
 }
 

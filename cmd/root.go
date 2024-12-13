@@ -3,6 +3,8 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"github.com/ai-flowx/flowx/memory"
+	"github.com/ai-flowx/flowx/store"
 	"os"
 	"os/signal"
 	"syscall"
@@ -22,7 +24,6 @@ const (
 
 var (
 	configFile string
-	configData config.Config
 	listenAddr string
 )
 
@@ -32,12 +33,23 @@ var rootCmd = &cobra.Command{
 	Short:   "ai framework",
 	Long:    fmt.Sprintf("ai framework %s (%s %s)", config.Version, config.Commit, config.Build),
 	Run: func(cmd *cobra.Command, args []string) {
+		var cfg config.Config
 		ctx := context.Background()
-		if err := viper.Unmarshal(&configData); err != nil {
+		if err := viper.Unmarshal(&cfg); err != nil {
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
-		f, err := initFlow(ctx)
+		s, err := initStore(ctx, &cfg)
+		if err != nil {
+			_, _ = fmt.Fprintln(os.Stderr, err.Error())
+			os.Exit(1)
+		}
+		m, err := initMemory(ctx, &cfg, s)
+		if err != nil {
+			_, _ = fmt.Fprintln(os.Stderr, err.Error())
+			os.Exit(1)
+		}
+		f, err := initFlow(ctx, &cfg, m)
 		if err != nil {
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
@@ -78,22 +90,44 @@ func initConfig() {
 	}
 }
 
-func initFlow(ctx context.Context) (flow.Flow, error) {
+func initStore(ctx context.Context, cfg *config.Config) (store.Store, error) {
+	c := store.DefaultConfig()
+	if c == nil {
+		return nil, errors.New("failed to config\n")
+	}
+
+	c.Provider = cfg.Store.Provider
+	c.Api = cfg.Store.Api
+	c.Token = cfg.Store.Token
+
+	return store.New(ctx, c), nil
+}
+
+func initMemory(ctx context.Context, cfg *config.Config, st store.Store) (memory.Memory, error) {
+	c := memory.DefaultConfig()
+	if c == nil {
+		return nil, errors.New("failed to config\n")
+	}
+
+	c.Store = st
+
+	return memory.New(ctx, c), nil
+}
+
+func initFlow(ctx context.Context, _ *config.Config, mem memory.Memory) (flow.Flow, error) {
 	c := flow.DefaultConfig()
 	if c == nil {
 		return nil, errors.New("failed to config\n")
 	}
 
 	c.Addr = listenAddr
-	c.Cache = configData.Cache
-	c.Gpt = configData.Gpt
-	c.Store = configData.Store
+	c.Memory = mem
 
 	return flow.New(ctx, c), nil
 }
 
-func runFlow(ctx context.Context, _flow flow.Flow) error {
-	if err := _flow.Init(ctx); err != nil {
+func runFlow(ctx context.Context, fl flow.Flow) error {
+	if err := fl.Init(ctx); err != nil {
 		return errors.Wrap(err, "failed to init\n")
 	}
 
@@ -101,7 +135,7 @@ func runFlow(ctx context.Context, _flow flow.Flow) error {
 	g.SetLimit(routineNum)
 
 	g.Go(func() error {
-		if err := _flow.Run(ctx); err != nil {
+		if err := fl.Run(ctx); err != nil {
 			return errors.Wrap(err, "failed to run\n")
 		}
 		return nil
@@ -116,7 +150,7 @@ func runFlow(ctx context.Context, _flow flow.Flow) error {
 
 	g.Go(func() error {
 		<-s
-		if err := _flow.Deinit(ctx); err != nil {
+		if err := fl.Deinit(ctx); err != nil {
 			return errors.Wrap(err, "failed to deinit\n")
 		}
 		return nil

@@ -5,7 +5,7 @@ import (
 
 	"golang.org/x/sync/errgroup"
 
-	"github.com/ai-flowx/flowx/config"
+	"github.com/ai-flowx/flowx/memory"
 )
 
 const (
@@ -19,10 +19,8 @@ type Flow interface {
 }
 
 type Config struct {
-	Addr  string
-	Cache []config.Cache
-	Gpt   []config.Gpt
-	Store []config.Store
+	Addr   string
+	Memory memory.Memory
 }
 
 type flow struct {
