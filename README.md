@@ -28,6 +28,50 @@ version=latest make build
 
 
 
+## Usage
+
+```
+Usage:
+  flowx [flags]
+
+Flags:
+  -c, --config-file string   config file
+  -h, --help                 help for flowx
+  -u, --listen-addr string   listen address (default "127.0.0.1:8080")
+  -v, --version              version for flowx
+```
+
+
+
+## Settings
+
+*flowx* parameters can be set in the directory [config](https://github.com/ai-flowx/flowx/blob/main/config).
+
+An example of configuration in [config.yml](https://github.com/ai-flowx/flowx/blob/main/config/config.yml):
+
+```yaml
+cache:
+  provider: cachex
+  api: http://127.0.0.1:8081
+  token: token
+gpt:
+  provider: openai
+  api: https://openai.com/api
+  token: token
+store:
+  provider: ragx
+  api: http://127.0.0.1:8082
+  token: token
+```
+
+
+
+## Architecture
+
+![arch](./arch.png "Architecture")
+
+
+
 ## License
 
 Project License can be found [here](LICENSE).
@@ -36,7 +80,7 @@ Project License can be found [here](LICENSE).
 
 ## Reference
 
-### Agent framework
+### Framework
 
 - [autogen](https://github.com/microsoft/autogen)
 - [cobra-cli](https://github.com/spf13/cobra-cli)
@@ -49,8 +93,12 @@ Project License can be found [here](LICENSE).
 - [modelfile](https://github.com/ollama/ollama/blob/main/docs/modelfile.md)
 - [semantic-kernel](https://github.com/microsoft/semantic-kernel)
 
-### Agent protocol
+### Protocol
 
 - [claude-mcp](https://ai-claude.net/mcp/)
 - [claude-mcp-servers](https://github.com/modelcontextprotocol/servers)
 - [langgraph-agent-protocol](https://github.com/langchain-ai/agent-protocol)
+
+### Store
+
+- [chroma-go](https://github.com/amikos-tech/chroma-go)
