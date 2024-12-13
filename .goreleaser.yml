@@ -2,7 +2,7 @@
 builds:
   - id: flowx
     env:
-      - CGO_ENABLED=0
+      - CGO_ENABLED=1
     goos:
       - darwin
       - linux
@@ -14,7 +14,7 @@ builds:
     binary: flowx
     flags:
       - -trimpath
-    ldflags: -s -w -X github.com/ai-flowx/flowx/config.Build={{.Date}} -X github.com/ai-flowx/flowx/config.Version={{.Version}}
+    ldflags: -s -w -X github.com/ai-flowx/flowx/config.Build={{.Date}} -X github.com/ai-flowx/flowx/config.Commit={{.Commit}} -X github.com/ai-flowx/flowx/config.Version={{.Version}}
 
 changelog:
   sort: asc
