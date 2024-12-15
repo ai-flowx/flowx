@@ -11,22 +11,28 @@ import (
 const (
 	searchLimit     = 3
 	searchThreshold = 0.35
+
+	typeLongTerm  = "longterm"
+	typeShortTerm = "shortterm"
 )
 
 type Memory interface {
 	Init(context.Context) error
 	Deinit(context.Context) error
 	Reset(context.Context) error
-	Save(context.Context, interface{}, map[string]interface{}, string) error
-	Search(context.Context, string, int, float64) ([]interface{}, error)
+	Save(context.Context, string, map[string]interface{}, string) error
+	Search(context.Context, string, int32, float32) ([]interface{}, error)
 }
 
 type Config struct {
 	Store store.Store
+	Type  string
 }
 
 type memory struct {
-	cfg *Config
+	cfg   *Config
+	long  *LongTerm
+	short *ShortTerm
 }
 
 func New(_ context.Context, cfg *Config) Memory {
@@ -40,38 +46,85 @@ func DefaultConfig() *Config {
 }
 
 func (m *memory) Init(ctx context.Context) error {
-	if err := m.cfg.Store.Init(ctx); err != nil {
-		return errors.Wrap(err, "failed to init\n")
+	var err error
+
+	if m.cfg.Type == typeLongTerm {
+		m.long = &LongTerm{
+			Store: m.cfg.Store,
+			Name:  m.cfg.Type,
+		}
+		err = m.long.Init(ctx)
+	} else if m.cfg.Type == typeShortTerm {
+		m.short = &ShortTerm{
+			Store: m.cfg.Store,
+			Name:  m.cfg.Type,
+		}
+		err = m.short.Init(ctx)
+	} else {
+		err = errors.New("invalid memory type\n")
 	}
 
-	return nil
+	return err
 }
 
 func (m *memory) Deinit(ctx context.Context) error {
-	if err := m.cfg.Store.Deinit(ctx); err != nil {
-		return errors.Wrap(err, "failed to deinit\n")
+	var err error
+
+	if m.cfg.Type == typeLongTerm {
+		if m.long != nil {
+			err = m.long.Deinit(ctx)
+		}
+	} else if m.cfg.Type == typeShortTerm {
+		if m.short != nil {
+			err = m.short.Deinit(ctx)
+		}
+	} else {
+		err = errors.New("invalid memory type\n")
 	}
 
-	return nil
+	return err
 }
 
 func (m *memory) Reset(ctx context.Context) error {
-	if err := m.cfg.Store.Reset(ctx); err != nil {
-		return errors.Wrap(err, "failed to reset\n")
+	var err error
+
+	if m.cfg.Type == typeLongTerm {
+		if m.long != nil {
+			err = m.long.Reset(ctx)
+		}
+	} else if m.cfg.Type == typeShortTerm {
+		if m.short != nil {
+			err = m.short.Reset(ctx)
+		}
+	} else {
+		err = errors.New("invalid memory type\n")
 	}
 
-	return nil
+	return err
 }
 
-func (m *memory) Save(ctx context.Context, value interface{}, meta map[string]interface{}, agent string) error {
-	if err := m.cfg.Store.Save(ctx, value, meta, agent); err != nil {
-		return errors.Wrap(err, "failed to save\n")
+func (m *memory) Save(ctx context.Context, text string, meta map[string]interface{}, agent string) error {
+	var err error
+
+	if m.cfg.Type == typeLongTerm {
+		if m.long != nil {
+			err = m.long.Save(ctx, text, meta, agent)
+		}
+	} else if m.cfg.Type == typeShortTerm {
+		if m.short != nil {
+			err = m.short.Save(ctx, text, meta, agent)
+		}
+	} else {
+		err = errors.New("invalid memory type\n")
 	}
 
-	return nil
+	return err
 }
 
-func (m *memory) Search(ctx context.Context, query string, limit int, threshold float64) ([]interface{}, error) {
+func (m *memory) Search(ctx context.Context, query string, limit int32, threshold float32) ([]interface{}, error) {
+	var buf []interface{}
+	var err error
+
 	if limit <= 0 {
 		limit = searchLimit
 	}
@@ -80,10 +133,17 @@ func (m *memory) Search(ctx context.Context, query string, limit int, threshold 
 		threshold = searchThreshold
 	}
 
-	buf, err := m.cfg.Store.Search(ctx, query, limit, threshold)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed to search\n")
+	if m.cfg.Type == typeLongTerm {
+		if m.long != nil {
+			buf, err = m.long.Search(ctx, query, limit, threshold)
+		}
+	} else if m.cfg.Type == typeShortTerm {
+		if m.short != nil {
+			buf, err = m.short.Search(ctx, query, limit, threshold)
+		}
+	} else {
+		err = errors.New("invalid memory type\n")
 	}
 
-	return buf, nil
+	return buf, err
 }

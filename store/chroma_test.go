@@ -25,7 +25,3 @@ func TestChromaSave(t *testing.T) {
 func TestChromaSearch(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
-
-func TestChromaEmbedding(t *testing.T) {
-	assert.Equal(t, nil, nil)
-}

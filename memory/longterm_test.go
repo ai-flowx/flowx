@@ -11,8 +11,9 @@ import (
 
 const (
 	agentTestLongTerm = "testAgent"
+	nameTestLongTerm  = "testName"
 	taskTestLongTerm  = "testTask"
-	valueTestLongTerm = "testValue"
+	textTestLongTerm  = "testText"
 )
 
 func initLongTermTest(ctx context.Context) LongTerm {
@@ -22,6 +23,7 @@ func initLongTermTest(ctx context.Context) LongTerm {
 
 	return LongTerm{
 		Store: s,
+		Name:  nameTestLongTerm,
 	}
 }
 
@@ -69,14 +71,14 @@ func TestLongTermSave(t *testing.T) {
 		_ = l.Deinit(ctx)
 	}(&l, ctx)
 
-	value := valueTestLongTerm
+	text := textTestLongTerm
 	meta := map[string]interface{}{
 		"task":    taskTestLongTerm,
 		"quality": 0.5,
 	}
 	agent := agentTestLongTerm
 
-	err := l.Save(ctx, value, meta, agent)
+	err := l.Save(ctx, text, meta, agent)
 	assert.Equal(t, nil, err)
 }
 
@@ -91,10 +93,10 @@ func TestLongTermSearch(t *testing.T) {
 		_ = l.Deinit(ctx)
 	}(&l, ctx)
 
-	query := valueTestLongTerm
+	query := textTestLongTerm
 	limit := 3
 	threshold := 0.35
 
-	_, err := l.Search(ctx, query, limit, threshold)
+	_, err := l.Search(ctx, query, int32(limit), float32(threshold))
 	assert.Equal(t, nil, err)
 }

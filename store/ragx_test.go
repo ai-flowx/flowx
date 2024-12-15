@@ -25,7 +25,3 @@ func TestRagxSave(t *testing.T) {
 func TestRagxSearch(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
-
-func TestRagxEmbedding(t *testing.T) {
-	assert.Equal(t, nil, nil)
-}

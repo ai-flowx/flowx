@@ -10,10 +10,11 @@ import (
 
 type LongTerm struct {
 	Store store.Store
+	Name  string
 }
 
 func (l *LongTerm) Init(ctx context.Context) error {
-	if err := l.Store.Init(ctx); err != nil {
+	if err := l.Store.Init(ctx, l.Name); err != nil {
 		return errors.Wrap(err, "failed to init\n")
 	}
 
@@ -36,15 +37,15 @@ func (l *LongTerm) Reset(ctx context.Context) error {
 	return nil
 }
 
-func (l *LongTerm) Save(ctx context.Context, value interface{}, meta map[string]interface{}, agent string) error {
-	if err := l.Store.Save(ctx, value, meta, agent); err != nil {
+func (l *LongTerm) Save(ctx context.Context, text string, meta map[string]interface{}, agent string) error {
+	if err := l.Store.Save(ctx, text, meta, agent); err != nil {
 		return errors.Wrap(err, "failed to save\n")
 	}
 
 	return nil
 }
 
-func (l *LongTerm) Search(ctx context.Context, query string, limit int, threshold float64) ([]interface{}, error) {
+func (l *LongTerm) Search(ctx context.Context, query string, limit int32, threshold float32) ([]interface{}, error) {
 	buf, err := l.Store.Search(ctx, query, limit, threshold)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to search\n")

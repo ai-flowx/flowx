@@ -13,18 +13,19 @@ var (
 	testConfig = config.Config{
 		Cache: config.Cache{
 			Provider: "gptcache",
-			Api:      "http://127.0.0.1:8081",
-			Token:    "token",
+			Url:      "http://127.0.0.1:8081",
 		},
 		Gpt: config.Gpt{
 			Provider: "openai",
 			Api:      "https://openai.com/api",
 			Token:    "token",
 		},
+		Memory: config.Memory{
+			Type: "shortterm",
+		},
 		Store: config.Store{
 			Provider: "chroma",
-			Api:      "http://127.0.0.1:8082",
-			Token:    "token",
+			Url:      "http://127.0.0.1:8082",
 		},
 	}
 )

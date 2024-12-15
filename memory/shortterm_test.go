@@ -11,8 +11,9 @@ import (
 
 const (
 	agentTestShortTerm = "testAgent"
+	nameTestShortTerm  = "testName"
 	taskTestShortTerm  = "testTask"
-	valueTestShortTerm = "testValue"
+	textTestShortTerm  = "testText"
 )
 
 func initShortTermTest(ctx context.Context) ShortTerm {
@@ -23,6 +24,7 @@ func initShortTermTest(ctx context.Context) ShortTerm {
 
 	return ShortTerm{
 		Store: s,
+		Name:  nameTestShortTerm,
 	}
 }
 
@@ -70,13 +72,13 @@ func TestShortTermSave(t *testing.T) {
 		_ = l.Deinit(ctx)
 	}(&l, ctx)
 
-	value := valueTestShortTerm
+	text := textTestShortTerm
 	meta := map[string]interface{}{
 		"task": taskTestShortTerm,
 	}
 	agent := agentTestShortTerm
 
-	err := l.Save(ctx, value, meta, agent)
+	err := l.Save(ctx, text, meta, agent)
 	assert.Equal(t, nil, err)
 }
 
@@ -91,10 +93,10 @@ func TestShortTermSearch(t *testing.T) {
 		_ = l.Deinit(ctx)
 	}(&l, ctx)
 
-	query := valueTestShortTerm
+	query := textTestShortTerm
 	limit := 3
 	threshold := 0.35
 
-	_, err := l.Search(ctx, query, limit, threshold)
+	_, err := l.Search(ctx, query, int32(limit), float32(threshold))
 	assert.Equal(t, nil, err)
 }

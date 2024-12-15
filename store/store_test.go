@@ -8,20 +8,19 @@ import (
 )
 
 const (
-	apiTestStore   = "http://127.0.0.1:8082/"
-	tokenTestStore = "token"
-	valueTestStore = "testStore"
+	nameTestStore = "testName"
+	textTestStore = "testText"
+	urlTestStore  = "http://127.0.0.1:8082/"
 )
 
 func initStoreTest(_ context.Context) store {
 	cfg := Config{}
 	cfg.Provider = ProviderChroma
-	cfg.Api = apiTestStore
-	cfg.Token = tokenTestStore
+	cfg.Url = urlTestStore
 
 	return store{
 		cfg: &cfg,
-		st:  storeList[cfg.Provider],
+		st:  &Chroma{Url: cfg.Url},
 	}
 }
 
@@ -30,7 +29,7 @@ func TestStoreInit(t *testing.T) {
 
 	s := initStoreTest(ctx)
 
-	err := s.Init(ctx)
+	err := s.Init(ctx, nameTestStore)
 	assert.Equal(t, nil, err)
 }
 
@@ -48,7 +47,7 @@ func TestStoreReset(t *testing.T) {
 
 	s := initStoreTest(ctx)
 
-	_ = s.Init(ctx)
+	_ = s.Init(ctx, nameTestStore)
 
 	defer func(s *store, ctx context.Context) {
 		_ = s.Deinit(ctx)
@@ -63,20 +62,20 @@ func TestStoreSave(t *testing.T) {
 
 	s := initStoreTest(ctx)
 
-	_ = s.Init(ctx)
+	_ = s.Init(ctx, nameTestStore)
 
 	defer func(s *store, ctx context.Context) {
 		_ = s.Deinit(ctx)
 	}(&s, ctx)
 
-	value := valueTestStore
+	text := textTestStore
 	meta := map[string]interface{}{
 		"task":    "testTask",
 		"quality": 0.5,
 	}
 	agent := "testAgent"
 
-	err := s.Save(ctx, value, meta, agent)
+	err := s.Save(ctx, text, meta, agent)
 	assert.Equal(t, nil, err)
 }
 
@@ -85,16 +84,16 @@ func TestStoreSearch(t *testing.T) {
 
 	s := initStoreTest(ctx)
 
-	_ = s.Init(ctx)
+	_ = s.Init(ctx, nameTestStore)
 
 	defer func(s *store, ctx context.Context) {
 		_ = s.Deinit(ctx)
 	}(&s, ctx)
 
-	query := valueTestStore
+	query := textTestStore
 	limit := 3
 	threshold := 0.35
 
-	_, err := s.Search(ctx, query, limit, threshold)
+	_, err := s.Search(ctx, query, int32(limit), float32(threshold))
 	assert.Equal(t, nil, err)
 }

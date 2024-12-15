@@ -10,22 +10,21 @@ import (
 )
 
 const (
-	apiTestStore   = "http://127.0.0.1:8082/"
-	tokenTestStore = "token"
+	urlTestStore = "http://127.0.0.1:8082/"
 
 	agentTestMemory = "testAgent"
 	taskTestMemory  = "testTask"
-	valueTestMemory = "testValue"
+	textTestMemory  = "testText"
 )
 
 func initMemoryTest(ctx context.Context) memory {
 	c := store.DefaultConfig()
 	c.Provider = store.ProviderChroma
-	c.Api = apiTestStore
-	c.Token = tokenTestStore
+	c.Url = urlTestStore
 
 	cfg := Config{}
 	cfg.Store = store.New(ctx, c)
+	cfg.Type = typeShortTerm
 
 	return memory{
 		cfg: &cfg,
@@ -76,14 +75,14 @@ func TestMemorySave(t *testing.T) {
 		_ = m.Deinit(ctx)
 	}(&m, ctx)
 
-	value := valueTestMemory
+	text := textTestMemory
 	meta := map[string]interface{}{
 		"task":    taskTestMemory,
 		"quality": 0.5,
 	}
 	agent := agentTestMemory
 
-	err := m.Save(ctx, value, meta, agent)
+	err := m.Save(ctx, text, meta, agent)
 	assert.Equal(t, nil, err)
 }
 
@@ -98,10 +97,10 @@ func TestMemorySearch(t *testing.T) {
 		_ = m.Deinit(ctx)
 	}(&m, ctx)
 
-	query := valueTestMemory
+	query := textTestMemory
 	limit := 3
 	threshold := 0.35
 
-	_, err := m.Search(ctx, query, limit, threshold)
+	_, err := m.Search(ctx, query, int32(limit), float32(threshold))
 	assert.Equal(t, nil, err)
 }

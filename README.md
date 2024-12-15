@@ -52,16 +52,16 @@ An example of configuration in [config.yml](https://github.com/ai-flowx/flowx/bl
 ```yaml
 cache:
   provider: cachex
-  api: http://127.0.0.1:8081
-  token: token
+  url: http://127.0.0.1:8081
 gpt:
   provider: openai
   api: https://openai.com/api
   token: token
+memory:
+  type: shortterm
 store:
   provider: ragx
-  api: http://127.0.0.1:8082
-  token: token
+  url: http://127.0.0.1:8082
 ```
 
 

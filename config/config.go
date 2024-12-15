@@ -7,15 +7,15 @@ var (
 )
 
 type Config struct {
-	Cache Cache `yaml:"cache"`
-	Gpt   Gpt   `yaml:"gpt"`
-	Store Store `yaml:"store"`
+	Cache  Cache  `yaml:"cache"`
+	Gpt    Gpt    `yaml:"gpt"`
+	Memory Memory `yaml:"memory"`
+	Store  Store  `yaml:"store"`
 }
 
 type Cache struct {
 	Provider string `yaml:"provider"`
-	Api      string `yaml:"api"`
-	Token    string `yaml:"token"`
+	Url      string `yaml:"url"`
 }
 
 type Gpt struct {
@@ -24,8 +24,11 @@ type Gpt struct {
 	Token    string `yaml:"token"`
 }
 
+type Memory struct {
+	Type string `yaml:"type"`
+}
+
 type Store struct {
 	Provider string `yaml:"provider"`
-	Api      string `yaml:"api"`
-	Token    string `yaml:"token"`
+	Url      string `yaml:"url"`
 }

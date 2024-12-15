@@ -3,8 +3,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"github.com/ai-flowx/flowx/memory"
-	"github.com/ai-flowx/flowx/store"
 	"os"
 	"os/signal"
 	"syscall"
@@ -16,6 +14,8 @@ import (
 
 	"github.com/ai-flowx/flowx/config"
 	"github.com/ai-flowx/flowx/flow"
+	"github.com/ai-flowx/flowx/memory"
+	"github.com/ai-flowx/flowx/store"
 )
 
 const (
@@ -97,8 +97,7 @@ func initStore(ctx context.Context, cfg *config.Config) (store.Store, error) {
 	}
 
 	c.Provider = cfg.Store.Provider
-	c.Api = cfg.Store.Api
-	c.Token = cfg.Store.Token
+	c.Url = cfg.Store.Url
 
 	return store.New(ctx, c), nil
 }
@@ -110,6 +109,7 @@ func initMemory(ctx context.Context, cfg *config.Config, st store.Store) (memory
 	}
 
 	c.Store = st
+	c.Type = cfg.Memory.Type
 
 	return memory.New(ctx, c), nil
 }
