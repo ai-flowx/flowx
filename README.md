@@ -80,6 +80,10 @@ Project License can be found [here](LICENSE).
 
 ## Reference
 
+### Chat
+
+- [dify-on-wechat](https://docs.dify.ai/zh-hans/learn-more/use-cases/dify-on-wechat)
+
 ### Framework
 
 - [autogen](https://github.com/microsoft/autogen)
