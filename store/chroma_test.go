@@ -1,3 +1,7 @@
+//go:build store_test
+
+// go test -cover -covermode=atomic -parallel 2 -tags=store_test -v github.com/ai-flowx/flowx/store
+
 package store
 
 import (
@@ -8,7 +12,7 @@ import (
 )
 
 const (
-	urlTestChroma = "http://47.88.100.1:8082"
+	urlTestChroma = "http://127.0.0.1:8082"
 
 	agentTestChroma = "agentTestChroma"
 	nameTestChroma  = "nameTestChroma"
