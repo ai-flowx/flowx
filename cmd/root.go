@@ -24,7 +24,7 @@ const (
 
 var (
 	configFile string
-	listenAddr string
+	listenPort string
 )
 
 var rootCmd = &cobra.Command{
@@ -72,7 +72,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVarP(&configFile, "config-file", "c", "", "config file")
-	rootCmd.PersistentFlags().StringVarP(&listenAddr, "listen-addr", "u", "127.0.0.1:8080", "listen address")
+	rootCmd.PersistentFlags().StringVarP(&listenPort, "listen-port", "l", ":8080", "listen port")
 
 	rootCmd.Root().CompletionOptions.DisableDefaultCmd = true
 }
@@ -98,6 +98,7 @@ func initStore(ctx context.Context, cfg *config.Config) (store.Store, error) {
 
 	c.Provider = cfg.Store.Provider
 	c.Url = cfg.Store.Url
+	c.Path = cfg.Store.Path
 
 	return store.New(ctx, c), nil
 }
@@ -120,8 +121,8 @@ func initFlow(ctx context.Context, _ *config.Config, mem memory.Memory) (flow.Fl
 		return nil, errors.New("failed to config\n")
 	}
 
-	c.Addr = listenAddr
 	c.Memory = mem
+	c.Port = listenPort
 
 	return flow.New(ctx, c), nil
 }

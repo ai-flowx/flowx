@@ -10,11 +10,11 @@ import (
 
 type ShortTerm struct {
 	Store store.Store
-	Name  string
+	Type  string
 }
 
 func (s *ShortTerm) Init(ctx context.Context) error {
-	if err := s.Store.Init(ctx, s.Name); err != nil {
+	if err := s.Store.Init(ctx, s.Type); err != nil {
 		return errors.Wrap(err, "failed to init\n")
 	}
 

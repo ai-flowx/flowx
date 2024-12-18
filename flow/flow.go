@@ -19,8 +19,8 @@ type Flow interface {
 }
 
 type Config struct {
-	Addr   string
 	Memory memory.Memory
+	Port   string
 }
 
 type flow struct {

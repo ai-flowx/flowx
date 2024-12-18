@@ -31,4 +31,5 @@ type Memory struct {
 type Store struct {
 	Provider string `yaml:"provider"`
 	Url      string `yaml:"url"`
+	Path     string `yaml:"path"`
 }

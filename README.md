@@ -37,7 +37,7 @@ Usage:
 Flags:
   -c, --config-file string   config file
   -h, --help                 help for flowx
-  -u, --listen-addr string   listen address (default "127.0.0.1:8080")
+  -l, --listen-port string   listen port (default ":8080")
   -v, --version              version for flowx
 ```
 
@@ -62,13 +62,31 @@ memory:
 store:
   provider: ragx
   url: http://127.0.0.1:8082
+  path: /path/to/file
 ```
 
 
 
-## Architecture
+## Features
 
-![arch](./arch.png "Architecture")
+- **Role-Based Agents**
+
+  Create specialized agents with defined roles, expertise, and goals
+
+
+- **Flexible Tools**
+
+  Equip agents with custom tools and APIs to interact with external services and data sources
+
+
+- **Intelligent Collaboration**
+
+  Agents work together, sharing insights and coordinating tasks to achieve complex objectives
+
+
+- **Task Management**
+
+  Define sequential or parallel workflows, with agents automatically handling task dependencies
 
 
 

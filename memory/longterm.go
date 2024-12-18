@@ -10,11 +10,11 @@ import (
 
 type LongTerm struct {
 	Store store.Store
-	Name  string
+	Type  string
 }
 
 func (l *LongTerm) Init(ctx context.Context) error {
-	if err := l.Store.Init(ctx, l.Name); err != nil {
+	if err := l.Store.Init(ctx, l.Type); err != nil {
 		return errors.Wrap(err, "failed to init\n")
 	}
 

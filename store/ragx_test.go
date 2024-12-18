@@ -1,6 +1,6 @@
-//go:build store_test
+//go:build store_ragx_test
 
-// go test -cover -covermode=atomic -parallel 2 -tags=store_test -v github.com/ai-flowx/flowx/store
+// go test -cover -covermode=atomic -parallel 2 -tags=store_ragx_test -v github.com/ai-flowx/flowx/store
 
 package store
 

@@ -4,6 +4,7 @@ go 1.23.4
 
 require (
 	github.com/amikos-tech/chroma-go v0.1.5-0.20241103135957-1b1e6ef18500
+	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0

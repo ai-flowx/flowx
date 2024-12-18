@@ -26,6 +26,7 @@ var (
 		Store: config.Store{
 			Provider: "chroma",
 			Url:      "http://127.0.0.1:8082",
+			Path:     "",
 		},
 	}
 )
@@ -56,7 +57,7 @@ func TestInitFlow(t *testing.T) {
 	s, _ := initStore(ctx, &testConfig)
 	m, _ := initMemory(ctx, &testConfig, s)
 
-	listenAddr = "127.0.0.1:8080"
+	listenPort = ":8080"
 
 	_, err := initFlow(ctx, &testConfig, m)
 	assert.Equal(t, nil, err)

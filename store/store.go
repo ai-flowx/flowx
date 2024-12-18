@@ -9,6 +9,7 @@ import (
 const (
 	ProviderChroma = "chroma"
 	ProviderRagx   = "ragx"
+	ProviderSqlite = "sqlite"
 )
 
 type Store interface {
@@ -22,6 +23,7 @@ type Store interface {
 type Config struct {
 	Provider string
 	Url      string
+	Path     string
 }
 
 type Collection struct {
@@ -47,6 +49,12 @@ func New(_ context.Context, cfg *Config) Store {
 		st = &Ragx{
 			Url: cfg.Url,
 		}
+	} else if cfg.Provider == ProviderSqlite {
+		st = &Sqlite{
+			Path: cfg.Path,
+		}
+	} else {
+		// BYPASS
 	}
 
 	return &store{

@@ -51,13 +51,13 @@ func (m *memory) Init(ctx context.Context) error {
 	if m.cfg.Type == typeLongTerm {
 		m.long = &LongTerm{
 			Store: m.cfg.Store,
-			Name:  m.cfg.Type,
+			Type:  m.cfg.Type,
 		}
 		err = m.long.Init(ctx)
 	} else if m.cfg.Type == typeShortTerm {
 		m.short = &ShortTerm{
 			Store: m.cfg.Store,
-			Name:  m.cfg.Type,
+			Type:  m.cfg.Type,
 		}
 		err = m.short.Init(ctx)
 	} else {
