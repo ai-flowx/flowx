@@ -15,12 +15,23 @@ const (
 type Tool interface {
 	Init(context.Context) error
 	Deinit(context.Context) error
-	Run(context.Context) error
+	Run(context.Context, []*Invoke) error
 }
 
 type Config struct {
 	Type string
 }
+
+type Invoke struct {
+	Name        string
+	Description string
+	Path        string
+	Func        Func
+	Args        map[string]interface{}
+	Result      string
+}
+
+type Func func(ctx context.Context, args ...interface{}) (string, error)
 
 type tool struct {
 	cfg       *Config
@@ -86,20 +97,20 @@ func (t *tool) Deinit(ctx context.Context) error {
 	return err
 }
 
-func (t *tool) Run(ctx context.Context) error {
+func (t *tool) Run(ctx context.Context, invokes []*Invoke) error {
 	var err error
 
 	if t.cfg.Type == typeCrewAi {
 		if t.crewai != nil {
-			err = t.crewai.Run(ctx)
+			err = t.crewai.Run(ctx, invokes)
 		}
 	} else if t.cfg.Type == typeFlowX {
 		if t.flowx != nil {
-			err = t.flowx.Run(ctx)
+			err = t.flowx.Run(ctx, invokes)
 		}
 	} else if t.cfg.Type == typeLangChain {
 		if t.langchain != nil {
-			err = t.langchain.Run(ctx)
+			err = t.langchain.Run(ctx, invokes)
 		}
 	} else {
 		err = errors.New("invalid tool type\n")

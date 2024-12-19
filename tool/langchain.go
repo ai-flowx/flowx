@@ -1,6 +1,8 @@
 package tool
 
-import "context"
+import (
+	"context"
+)
 
 type LangChain struct {
 	Type string
@@ -14,6 +16,6 @@ func (l *LangChain) Deinit(_ context.Context) error {
 	return nil
 }
 
-func (l *LangChain) Run(ctx context.Context) error {
+func (l *LangChain) Run(ctx context.Context, invokes []*Invoke) error {
 	return nil
 }
