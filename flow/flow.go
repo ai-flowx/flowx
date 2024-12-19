@@ -6,6 +6,7 @@ import (
 	"golang.org/x/sync/errgroup"
 
 	"github.com/ai-flowx/flowx/memory"
+	"github.com/ai-flowx/flowx/tool"
 )
 
 const (
@@ -19,8 +20,10 @@ type Flow interface {
 }
 
 type Config struct {
+	Port string
+
 	Memory memory.Memory
-	Port   string
+	Tool   tool.Tool
 }
 
 type flow struct {

@@ -16,6 +16,7 @@ import (
 	"github.com/ai-flowx/flowx/flow"
 	"github.com/ai-flowx/flowx/memory"
 	"github.com/ai-flowx/flowx/store"
+	"github.com/ai-flowx/flowx/tool"
 )
 
 const (
@@ -49,7 +50,12 @@ var rootCmd = &cobra.Command{
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
-		f, err := initFlow(ctx, &cfg, m)
+		t, err := initTool(ctx, &cfg)
+		if err != nil {
+			_, _ = fmt.Fprintln(os.Stderr, err.Error())
+			os.Exit(1)
+		}
+		f, err := initFlow(ctx, &cfg, m, t)
 		if err != nil {
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
@@ -115,14 +121,25 @@ func initMemory(ctx context.Context, cfg *config.Config, st store.Store) (memory
 	return memory.New(ctx, c), nil
 }
 
-func initFlow(ctx context.Context, _ *config.Config, mem memory.Memory) (flow.Flow, error) {
+func initTool(ctx context.Context, _ *config.Config) (tool.Tool, error) {
+	c := tool.DefaultConfig()
+	if c == nil {
+		return nil, errors.New("failed to config\n")
+	}
+
+	return tool.New(ctx, c), nil
+}
+
+func initFlow(ctx context.Context, _ *config.Config, mem memory.Memory, _tool tool.Tool) (flow.Flow, error) {
 	c := flow.DefaultConfig()
 	if c == nil {
 		return nil, errors.New("failed to config\n")
 	}
 
-	c.Memory = mem
 	c.Port = listenPort
+
+	c.Memory = mem
+	c.Tool = _tool
 
 	return flow.New(ctx, c), nil
 }

@@ -11,6 +11,7 @@ type Config struct {
 	Gpt    Gpt    `yaml:"gpt"`
 	Memory Memory `yaml:"memory"`
 	Store  Store  `yaml:"store"`
+	Tool   Tool   `yaml:"tool"`
 }
 
 type Cache struct {
@@ -32,4 +33,8 @@ type Store struct {
 	Provider string `yaml:"provider"`
 	Url      string `yaml:"url"`
 	Path     string `yaml:"path"`
+}
+
+type Tool struct {
+	Provider string `yaml:"provider"`
 }

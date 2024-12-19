@@ -28,6 +28,9 @@ var (
 			Url:      "http://127.0.0.1:8082",
 			Path:     "",
 		},
+		Tool: config.Tool{
+			Provider: "langchain",
+		},
 	}
 )
 
@@ -51,15 +54,23 @@ func TestInitMemory(t *testing.T) {
 	assert.Equal(t, nil, err)
 }
 
+func TestInitTool(t *testing.T) {
+	ctx := context.Background()
+
+	_, err := initTool(ctx, &testConfig)
+	assert.Equal(t, nil, err)
+}
+
 func TestInitFlow(t *testing.T) {
 	ctx := context.Background()
 
-	s, _ := initStore(ctx, &testConfig)
-	m, _ := initMemory(ctx, &testConfig, s)
-
 	listenPort = ":8080"
 
-	_, err := initFlow(ctx, &testConfig, m)
+	s, _ := initStore(ctx, &testConfig)
+	m, _ := initMemory(ctx, &testConfig, s)
+	_t, _ := initTool(ctx, &testConfig)
+
+	_, err := initFlow(ctx, &testConfig, m, _t)
 	assert.Equal(t, nil, err)
 }
 
