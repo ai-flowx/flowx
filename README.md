@@ -67,6 +67,12 @@ store:
 
 
 
+## Architecture
+
+![arch](./arch.png "Architecture")
+
+
+
 ## Features
 
 - **Role-Based Agents**
