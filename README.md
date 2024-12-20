@@ -108,7 +108,7 @@ Project License can be found [here](LICENSE).
 
 ### Binding
 
--[gopy](https://github.com/go-python/gopy)
+- [gopy](https://github.com/go-python/gopy)
 
 ### Chat
 
