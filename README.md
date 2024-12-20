@@ -106,6 +106,10 @@ Project License can be found [here](LICENSE).
 
 ## Reference
 
+### Binding
+
+-[gopy](https://github.com/go-python/gopy)
+
 ### Chat
 
 - [dify-on-wechat](https://docs.dify.ai/zh-hans/learn-more/use-cases/dify-on-wechat)
