@@ -4,9 +4,7 @@ import (
 	"context"
 )
 
-type LangChain struct {
-	Type string
-}
+type LangChain struct{}
 
 func (l *LangChain) Init(_ context.Context) error {
 	return nil

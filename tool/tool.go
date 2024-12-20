@@ -31,7 +31,7 @@ type Invoke struct {
 	Result      string
 }
 
-type Func func(ctx context.Context, args ...interface{}) (string, error)
+type Func func(ctx context.Context, args ...interface{}) ([]byte, error)
 
 type tool struct {
 	cfg       *Config
@@ -54,19 +54,13 @@ func (t *tool) Init(ctx context.Context) error {
 	var err error
 
 	if t.cfg.Type == typeCrewAi {
-		t.crewai = &CrewAi{
-			Type: t.cfg.Type,
-		}
+		t.crewai = &CrewAi{}
 		err = t.crewai.Init(ctx)
 	} else if t.cfg.Type == typeFlowX {
-		t.flowx = &FlowX{
-			Type: t.cfg.Type,
-		}
+		t.flowx = &FlowX{}
 		err = t.flowx.Init(ctx)
 	} else if t.cfg.Type == typeLangChain {
-		t.langchain = &LangChain{
-			Type: t.cfg.Type,
-		}
+		t.langchain = &LangChain{}
 		err = t.langchain.Init(ctx)
 	} else {
 		err = errors.New("invalid tool type\n")
