@@ -4,40 +4,37 @@ import (
 	"context"
 
 	"github.com/pkg/errors"
+
+	"github.com/ai-flowx/toolx/hello"
 )
 
 const (
 	typeCrewAi    = "crewai"
-	typeFlowX     = "flowx"
 	typeLangChain = "langchain"
+	typeToolX     = "toolx"
 )
 
 type Tool interface {
 	Init(context.Context) error
 	Deinit(context.Context) error
-	Run(context.Context, []*Invoke) error
+	List(context.Context) ([]Provider, error)
+	Run(context.Context, string, string, ...interface{}) (string, error)
 }
 
 type Config struct {
+	Provider []Provider
+}
+
+type Provider struct {
 	Type string
+	Name string
 }
-
-type Invoke struct {
-	Name        string
-	Description string
-	Path        string
-	Func        Func
-	Args        map[string]interface{}
-	Result      string
-}
-
-type Func func(ctx context.Context, args ...interface{}) ([]byte, error)
 
 type tool struct {
 	cfg       *Config
-	crewai    *CrewAi
-	flowx     *FlowX
-	langchain *LangChain
+	crewai    []CrewAi
+	langchain []LangChain
+	toolx     []ToolX
 }
 
 func New(_ context.Context, cfg *Config) Tool {
@@ -50,65 +47,60 @@ func DefaultConfig() *Config {
 	return &Config{}
 }
 
-func (t *tool) Init(ctx context.Context) error {
+func (t *tool) Init(_ context.Context) error {
 	var err error
 
-	if t.cfg.Type == typeCrewAi {
-		t.crewai = &CrewAi{}
-		err = t.crewai.Init(ctx)
-	} else if t.cfg.Type == typeFlowX {
-		t.flowx = &FlowX{}
-		err = t.flowx.Init(ctx)
-	} else if t.cfg.Type == typeLangChain {
-		t.langchain = &LangChain{}
-		err = t.langchain.Init(ctx)
-	} else {
-		err = errors.New("invalid tool type\n")
+	for _, item := range t.cfg.Provider {
+		if item.Type == typeCrewAi {
+			err = errors.New("TBD: FIXME\n")
+		} else if item.Type == typeLangChain {
+			err = errors.New("TBD: FIXME\n")
+		} else if item.Type == typeToolX {
+			t.toolx = append(t.toolx, hello.Hello{})
+		} else {
+			err = errors.New("invalid type\n")
+		}
 	}
 
 	return err
 }
 
-func (t *tool) Deinit(ctx context.Context) error {
-	var err error
+func (t *tool) Deinit(_ context.Context) error {
+	t.toolx = t.toolx[:0]
+	t.langchain = t.langchain[:0]
+	t.crewai = t.crewai[:0]
 
-	if t.cfg.Type == typeCrewAi {
-		if t.crewai != nil {
-			err = t.crewai.Deinit(ctx)
-		}
-	} else if t.cfg.Type == typeFlowX {
-		if t.flowx != nil {
-			err = t.flowx.Deinit(ctx)
-		}
-	} else if t.cfg.Type == typeLangChain {
-		if t.langchain != nil {
-			err = t.langchain.Deinit(ctx)
-		}
-	} else {
-		err = errors.New("invalid tool type\n")
-	}
-
-	return err
+	return nil
 }
 
-func (t *tool) Run(ctx context.Context, invokes []*Invoke) error {
+func (t *tool) List(_ context.Context) ([]Provider, error) {
+	return t.cfg.Provider, nil
+}
+
+func (t *tool) Run(ctx context.Context, _type, name string, args ...interface{}) (string, error) {
+	var found bool
+	var res string
 	var err error
 
-	if t.cfg.Type == typeCrewAi {
-		if t.crewai != nil {
-			err = t.crewai.Run(ctx, invokes)
-		}
-	} else if t.cfg.Type == typeFlowX {
-		if t.flowx != nil {
-			err = t.flowx.Run(ctx, invokes)
-		}
-	} else if t.cfg.Type == typeLangChain {
-		if t.langchain != nil {
-			err = t.langchain.Run(ctx, invokes)
+	if _type == typeCrewAi {
+		err = errors.New("TBD: FIXME\n")
+	} else if _type == typeLangChain {
+		err = errors.New("TBD: FIXME\n")
+	} else if _type == typeToolX {
+		for _, item := range t.toolx {
+			if item.Name() == name {
+				found = true
+				res, err = item.Call(ctx, args)
+				break
+			}
 		}
 	} else {
-		err = errors.New("invalid tool type\n")
+		err = errors.New("invalid type\n")
 	}
 
-	return err
+	if !found {
+		err = errors.New("invalid name\n")
+	}
+
+	return res, err
 }

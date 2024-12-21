@@ -10,14 +10,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestLangChainInit(t *testing.T) {
-	assert.Equal(t, nil, nil)
-}
-
-func TestLangChainDeinit(t *testing.T) {
-	assert.Equal(t, nil, nil)
-}
-
-func TestLangChainRun(t *testing.T) {
+func TestLangChain(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }

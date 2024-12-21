@@ -28,8 +28,11 @@ var (
 			Url:      "http://127.0.0.1:8082",
 			Path:     "",
 		},
-		Tool: config.Tool{
-			Provider: "langchain",
+		Tool: []config.Tool{
+			{
+				Type: "toolx",
+				Name: "hello",
+			},
 		},
 	}
 )

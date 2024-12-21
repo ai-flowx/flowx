@@ -64,7 +64,8 @@ store:
   url: http://127.0.0.1:8082
   path: /path/to/file
 tool:
-  provider: flowx
+  - type: toolx
+    name: hello
 ```
 
 
@@ -136,3 +137,10 @@ Project License can be found [here](LICENSE).
 ### Store
 
 - [chroma-go](https://github.com/amikos-tech/chroma-go)
+
+### Tools
+
+- [crewai-tools](https://docs.crewai.com/concepts/tools)
+- [crewai-tools](https://github.com/crewAIInc/crewAI-tools)
+- [langchain-tools](https://python.langchain.com/docs/integrations/tools/)
+- [langchaingo](https://github.com/tmc/langchaingo)

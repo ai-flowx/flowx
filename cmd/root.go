@@ -121,10 +121,17 @@ func initMemory(ctx context.Context, cfg *config.Config, st store.Store) (memory
 	return memory.New(ctx, c), nil
 }
 
-func initTool(ctx context.Context, _ *config.Config) (tool.Tool, error) {
+func initTool(ctx context.Context, cfg *config.Config) (tool.Tool, error) {
 	c := tool.DefaultConfig()
 	if c == nil {
 		return nil, errors.New("failed to config\n")
+	}
+
+	for _, item := range cfg.Tool {
+		c.Provider = append(c.Provider, tool.Provider{
+			Type: item.Type,
+			Name: item.Name,
+		})
 	}
 
 	return tool.New(ctx, c), nil

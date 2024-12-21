@@ -11,16 +11,22 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const (
+	nameToolTest = "hello"
+)
+
 func initToolTest(_ context.Context) tool {
 	cfg := Config{
-		Type: typeFlowX,
+		Provider: []Provider{
+			{
+				Type: typeToolX,
+				Name: nameToolTest,
+			},
+		},
 	}
 
-	flowx := FlowX{}
-
 	return tool{
-		cfg:   &cfg,
-		flowx: &flowx,
+		cfg: &cfg,
 	}
 }
 
@@ -42,6 +48,20 @@ func TestToolDeinit(t *testing.T) {
 	assert.Equal(t, nil, err)
 }
 
+func TestToolList(t *testing.T) {
+	ctx := context.Background()
+	_t := initToolTest(ctx)
+
+	_ = _t.Init(ctx)
+
+	defer func(_t *tool, ctx context.Context) {
+		_ = _t.Deinit(ctx)
+	}(&_t, ctx)
+
+	_, err := _t.List(ctx)
+	assert.Equal(t, nil, err)
+}
+
 func TestToolRun(t *testing.T) {
 	ctx := context.Background()
 	_t := initToolTest(ctx)
@@ -52,16 +72,6 @@ func TestToolRun(t *testing.T) {
 		_ = _t.Deinit(ctx)
 	}(&_t, ctx)
 
-	invokes := []*Invoke{
-		{
-			Name:        "flowx.sh",
-			Description: "flowx bash",
-			Path:        "../test/tool/flowx.sh",
-			Func:        nil,
-			Args:        nil,
-		},
-	}
-
-	err := _t.Run(ctx, invokes)
+	_, err := _t.Run(ctx, typeToolX, nameToolTest, "arg")
 	assert.Equal(t, nil, err)
 }

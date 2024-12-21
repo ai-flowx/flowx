@@ -4,7 +4,7 @@ import (
 	"context"
 )
 
-type CrewAi interface {
+type ToolX interface {
 	Name() string
 	Description() string
 	Call(ctx context.Context, args ...interface{}) (string, error)

@@ -10,14 +10,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCrewAiInit(t *testing.T) {
-	assert.Equal(t, nil, nil)
-}
-
-func TestCrewAiDeinit(t *testing.T) {
-	assert.Equal(t, nil, nil)
-}
-
-func TestCrewAiRun(t *testing.T) {
+func TestCrewAi(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
