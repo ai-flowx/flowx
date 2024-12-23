@@ -13,6 +13,6 @@ store:
   path: /path/to/file
 tool:
   - type: langchain
-    name: langchain
+    name: decorator
   - type: toolx
     name: hello
