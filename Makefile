@@ -13,6 +13,9 @@ build: go-build
 clean: go-clean
 .PHONY: clean
 
+install: go-install
+.PHONY: install
+
 lint: go-lint
 .PHONY: lint
 
@@ -30,6 +33,9 @@ go-build: FORCE
 
 go-clean: FORCE
 	./script/clean.sh
+
+go-install: FORCE
+	./script/install.sh
 
 go-lint: FORCE
 	./script/lint.sh

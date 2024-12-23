@@ -6,6 +6,7 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/ai-flowx/toolx/hello"
+	"github.com/ai-flowx/toolx/langchain"
 )
 
 const (
@@ -47,30 +48,56 @@ func DefaultConfig() *Config {
 	return &Config{}
 }
 
-func (t *tool) Init(_ context.Context) error {
+func (t *tool) Init(ctx context.Context) error {
 	var err error
 
-	for _, item := range t.cfg.Provider {
-		if item.Type == typeCrewAi {
-			err = errors.New("TBD: FIXME\n")
-		} else if item.Type == typeLangChain {
-			err = errors.New("TBD: FIXME\n")
-		} else if item.Type == typeToolX {
-			t.toolx = append(t.toolx, hello.Hello{})
-		} else {
-			err = errors.New("invalid type\n")
+	if err = t.initProvider(ctx); err != nil {
+		return errors.Wrap(err, "failed to init provider\n")
+	}
+
+	for _, item := range t.crewai {
+		if err = item.Init(ctx); err != nil {
+			break
+		}
+	}
+
+	for _, item := range t.langchain {
+		if err = item.Init(ctx); err != nil {
+			break
+		}
+	}
+
+	for _, item := range t.toolx {
+		if err = item.Init(ctx); err != nil {
+			break
 		}
 	}
 
 	return err
 }
 
-func (t *tool) Deinit(_ context.Context) error {
-	t.toolx = t.toolx[:0]
-	t.langchain = t.langchain[:0]
-	t.crewai = t.crewai[:0]
+func (t *tool) Deinit(ctx context.Context) error {
+	var err error
 
-	return nil
+	for _, item := range t.toolx {
+		if err = item.Deinit(ctx); err != nil {
+			break
+		}
+	}
+
+	for _, item := range t.langchain {
+		if err = item.Deinit(ctx); err != nil {
+			break
+		}
+	}
+
+	for _, item := range t.crewai {
+		if err = item.Deinit(ctx); err != nil {
+			break
+		}
+	}
+
+	return t.deinitProvider(ctx)
 }
 
 func (t *tool) List(_ context.Context) ([]Provider, error) {
@@ -85,10 +112,16 @@ func (t *tool) Run(ctx context.Context, _type, name string, args ...interface{})
 	if _type == typeCrewAi {
 		err = errors.New("TBD: FIXME\n")
 	} else if _type == typeLangChain {
-		err = errors.New("TBD: FIXME\n")
+		for _, item := range t.langchain {
+			if item.Name(ctx) == name {
+				found = true
+				res, err = item.Call(ctx, args)
+				break
+			}
+		}
 	} else if _type == typeToolX {
 		for _, item := range t.toolx {
-			if item.Name() == name {
+			if item.Name(ctx) == name {
 				found = true
 				res, err = item.Call(ctx, args)
 				break
@@ -103,4 +136,30 @@ func (t *tool) Run(ctx context.Context, _type, name string, args ...interface{})
 	}
 
 	return res, err
+}
+
+func (t *tool) initProvider(_ context.Context) error {
+	var err error
+
+	for _, item := range t.cfg.Provider {
+		if item.Type == typeCrewAi {
+			err = errors.New("TBD: FIXME\n")
+		} else if item.Type == typeLangChain {
+			t.langchain = append(t.langchain, langchain.LangChain{})
+		} else if item.Type == typeToolX {
+			t.toolx = append(t.toolx, hello.Hello{})
+		} else {
+			err = errors.New("invalid type\n")
+		}
+	}
+
+	return err
+}
+
+func (t *tool) deinitProvider(_ context.Context) error {
+	t.toolx = t.toolx[:0]
+	t.langchain = t.langchain[:0]
+	t.crewai = t.crewai[:0]
+
+	return nil
 }
