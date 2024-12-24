@@ -36,6 +36,5 @@ type Store struct {
 }
 
 type Tool struct {
-	Type string
 	Name string
 }

@@ -129,7 +129,6 @@ func initTool(ctx context.Context, cfg *config.Config) (tool.Tool, error) {
 
 	for _, item := range cfg.Tool {
 		c.Provider = append(c.Provider, tool.Provider{
-			Type: item.Type,
 			Name: item.Name,
 		})
 	}

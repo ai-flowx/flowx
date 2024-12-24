@@ -19,7 +19,6 @@ func initToolTest(_ context.Context) tool {
 	cfg := Config{
 		Provider: []Provider{
 			{
-				Type: typeToolX,
 				Name: nameToolTest,
 			},
 		},
@@ -72,6 +71,6 @@ func TestToolRun(t *testing.T) {
 		_ = _t.Deinit(ctx)
 	}(&_t, ctx)
 
-	_, err := _t.Run(ctx, typeToolX, nameToolTest, "arg")
+	_, err := _t.Run(ctx, nameToolTest, "arg")
 	assert.Equal(t, nil, err)
 }

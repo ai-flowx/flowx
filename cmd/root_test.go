@@ -30,7 +30,6 @@ var (
 		},
 		Tool: []config.Tool{
 			{
-				Type: "toolx",
 				Name: "hello",
 			},
 		},
