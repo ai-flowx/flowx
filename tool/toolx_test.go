@@ -6,7 +6,6 @@ package tool
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -62,13 +61,9 @@ func TestToolXRun(t *testing.T) {
 		_ = _t.Deinit(ctx)
 	}(&_t, ctx)
 
-	buf, err := _t.Run(ctx, nameToolXDecoratorTest, "arg")
+	_, err := _t.Run(ctx, nameToolXDecoratorTest, "arg")
 	assert.Equal(t, nil, err)
 
-	fmt.Println(string(buf))
-
-	buf, err = _t.Run(ctx, nameToolXHelloTest, "arg")
+	_, err = _t.Run(ctx, nameToolXHelloTest, "arg")
 	assert.Equal(t, nil, err)
-
-	fmt.Println(string(buf))
 }
