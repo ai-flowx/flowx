@@ -6,20 +6,25 @@ package tool
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 const (
-	nameToolXTest = "hello"
+	nameToolXDecoratorTest = "decorator"
+	nameToolXHelloTest     = "hello"
 )
 
 func initToolXTest(_ context.Context) tool {
 	cfg := Config{
 		Provider: []Provider{
 			{
-				Name: nameToolXTest,
+				Name: nameToolXDecoratorTest,
+			},
+			{
+				Name: nameToolXHelloTest,
 			},
 		},
 	}
@@ -57,6 +62,13 @@ func TestToolXRun(t *testing.T) {
 		_ = _t.Deinit(ctx)
 	}(&_t, ctx)
 
-	_, err := _t.Run(ctx, nameToolXTest, "arg")
+	buf, err := _t.Run(ctx, nameToolXDecoratorTest, "arg")
 	assert.Equal(t, nil, err)
+
+	fmt.Println(string(buf))
+
+	buf, err = _t.Run(ctx, nameToolXHelloTest, "arg")
+	assert.Equal(t, nil, err)
+
+	fmt.Println(string(buf))
 }
