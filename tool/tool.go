@@ -5,11 +5,10 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/ai-flowx/toolx/basetool"
 	"github.com/ai-flowx/toolx/decorator"
 	"github.com/ai-flowx/toolx/hello"
-	"github.com/ai-flowx/toolx/runnables"
 	"github.com/ai-flowx/toolx/structuredtool"
+	"github.com/ai-flowx/toolx/wechat"
 )
 
 type Tool interface {
@@ -96,11 +95,10 @@ func (t *tool) Run(ctx context.Context, name string, args ...interface{}) (strin
 
 func (t *tool) initProvider(_ context.Context) error {
 	t.toolx = append(t.toolx,
-		basetool.BaseTool{},
 		decorator.Decorator{},
 		hello.Hello{},
-		runnables.Runnables{},
-		structuredtool.StructuredTool{})
+		structuredtool.StructuredTool{},
+		wechat.WeChat{})
 
 	return nil
 }

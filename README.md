@@ -64,11 +64,10 @@ store:
   url: http://127.0.0.1:8082
   path: /path/to/file
 tool:
-  - name: basetool
   - name: decorator
   - name: hello
-  - name: runnables
   - name: structuredtool
+  - name: wechat
 ```
 
 
