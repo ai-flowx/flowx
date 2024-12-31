@@ -67,6 +67,7 @@ store:
   path: /path/to/file
 tool:
   - name: decorator
+  - name: gerrit
   - name: hello
   - name: structuredtool
 ```
