@@ -14,6 +14,7 @@ import (
 
 	"github.com/ai-flowx/flowx/config"
 	"github.com/ai-flowx/flowx/flow"
+	"github.com/ai-flowx/flowx/gpt"
 	"github.com/ai-flowx/flowx/memory"
 	"github.com/ai-flowx/flowx/store"
 	"github.com/ai-flowx/flowx/tool"
@@ -40,6 +41,11 @@ var rootCmd = &cobra.Command{
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
+		g, err := initGpt(ctx, &cfg)
+		if err != nil {
+			_, _ = fmt.Fprintln(os.Stderr, err.Error())
+			os.Exit(1)
+		}
 		s, err := initStore(ctx, &cfg)
 		if err != nil {
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
@@ -55,7 +61,7 @@ var rootCmd = &cobra.Command{
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
-		f, err := initFlow(ctx, &cfg, m, t)
+		f, err := initFlow(ctx, &cfg, g, m, t)
 		if err != nil {
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
@@ -94,6 +100,20 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err != nil {
 		_, _ = fmt.Fprintln(os.Stderr, err.Error())
 	}
+}
+
+func initGpt(ctx context.Context, cfg *config.Config) (gpt.Gpt, error) {
+	c := gpt.DefaultConfig()
+	if c == nil {
+		return nil, errors.New("failed to config\n")
+	}
+
+	c.Provider = cfg.Gpt.Provider
+	c.Api = cfg.Gpt.Api
+	c.Model = cfg.Gpt.Model
+	c.Key = cfg.Gpt.Key
+
+	return gpt.New(ctx, c), nil
 }
 
 func initStore(ctx context.Context, cfg *config.Config) (store.Store, error) {
@@ -136,7 +156,7 @@ func initTool(ctx context.Context, cfg *config.Config) (tool.Tool, error) {
 	return tool.New(ctx, c), nil
 }
 
-func initFlow(ctx context.Context, cfg *config.Config, mem memory.Memory, _tool tool.Tool) (flow.Flow, error) {
+func initFlow(ctx context.Context, cfg *config.Config, _gpt gpt.Gpt, mem memory.Memory, _tool tool.Tool) (flow.Flow, error) {
 	c := flow.DefaultConfig()
 	if c == nil {
 		return nil, errors.New("failed to config\n")
@@ -144,6 +164,7 @@ func initFlow(ctx context.Context, cfg *config.Config, mem memory.Memory, _tool 
 
 	c.Channel = cfg.Flow.Channel
 	c.Port = listenPort
+	c.Gpt = _gpt
 	c.Memory = mem
 	c.Tool = _tool
 

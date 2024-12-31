@@ -4,9 +4,10 @@ cache:
 flow:
   channel: wechat
 gpt:
-  provider: openai
-  api: https://openai.com/api
-  token: token
+  provider: doubao-chat
+  api: https://ark.cn-beijing.volces.com/api/v3/chat/completions
+  model: ep-*
+  key: 8429f8ab-*
 memory:
   type: shortterm
 store:

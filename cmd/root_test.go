@@ -19,9 +19,10 @@ var (
 			Channel: "wechat",
 		},
 		Gpt: config.Gpt{
-			Provider: "openai",
-			Api:      "https://openai.com/api",
-			Token:    "token",
+			Provider: "doubao-chat",
+			Api:      "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
+			Model:    "ep-*",
+			Key:      "8429f8ab-*",
 		},
 		Memory: config.Memory{
 			Type: "shortterm",
@@ -41,6 +42,13 @@ var (
 
 func TestInitConfig(t *testing.T) {
 	assert.Equal(t, nil, nil)
+}
+
+func TestInitGpt(t *testing.T) {
+	ctx := context.Background()
+
+	_, err := initGpt(ctx, &testConfig)
+	assert.Equal(t, nil, err)
 }
 
 func TestInitStore(t *testing.T) {
@@ -71,11 +79,12 @@ func TestInitFlow(t *testing.T) {
 
 	listenPort = ":8080"
 
+	g, _ := initGpt(ctx, &testConfig)
 	s, _ := initStore(ctx, &testConfig)
 	m, _ := initMemory(ctx, &testConfig, s)
 	_t, _ := initTool(ctx, &testConfig)
 
-	_, err := initFlow(ctx, &testConfig, m, _t)
+	_, err := initFlow(ctx, &testConfig, g, m, _t)
 	assert.Equal(t, nil, err)
 }
 

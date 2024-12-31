@@ -3,15 +3,15 @@ package flow
 import (
 	"context"
 
+	"github.com/pkg/errors"
+
+	"github.com/ai-flowx/flowx/gpt"
 	"github.com/ai-flowx/flowx/memory"
 	"github.com/ai-flowx/flowx/tool"
-	"github.com/pkg/errors"
 )
 
 const (
 	channelWeChat = "wechat"
-
-	routineNum = -1
 )
 
 type Flow interface {
@@ -23,6 +23,7 @@ type Flow interface {
 type Config struct {
 	Channel string
 	Port    string
+	Gpt     gpt.Gpt
 	Memory  memory.Memory
 	Tool    tool.Tool
 }
