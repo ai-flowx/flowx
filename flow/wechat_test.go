@@ -6,6 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestFlow(t *testing.T) {
+func TestWeChat(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }

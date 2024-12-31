@@ -136,14 +136,14 @@ func initTool(ctx context.Context, cfg *config.Config) (tool.Tool, error) {
 	return tool.New(ctx, c), nil
 }
 
-func initFlow(ctx context.Context, _ *config.Config, mem memory.Memory, _tool tool.Tool) (flow.Flow, error) {
+func initFlow(ctx context.Context, cfg *config.Config, mem memory.Memory, _tool tool.Tool) (flow.Flow, error) {
 	c := flow.DefaultConfig()
 	if c == nil {
 		return nil, errors.New("failed to config\n")
 	}
 
+	c.Channel = cfg.Flow.Channel
 	c.Port = listenPort
-
 	c.Memory = mem
 	c.Tool = _tool
 

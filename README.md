@@ -53,6 +53,8 @@ An example of configuration in [config.yml](https://github.com/ai-flowx/flowx/bl
 cache:
   provider: cachex
   url: http://127.0.0.1:8081
+flow:
+  channel: wechat
 gpt:
   provider: openai
   api: https://openai.com/api
@@ -67,7 +69,6 @@ tool:
   - name: decorator
   - name: hello
   - name: structuredtool
-  - name: wechat
 ```
 
 
@@ -116,6 +117,8 @@ Project License can be found [here](LICENSE).
 ### Chat
 
 - [dify-on-wechat](https://docs.dify.ai/zh-hans/learn-more/use-cases/dify-on-wechat)
+- [dify-on-wechat](https://github.com/hanfangyuan4396/dify-on-wechat/blob/master/channel/wechat/wechat_channel.py)
+- [openwechat](github.com/eatmoreapple/openwechat)
 
 ### Framework
 

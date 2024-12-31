@@ -15,6 +15,9 @@ var (
 			Provider: "gptcache",
 			Url:      "http://127.0.0.1:8081",
 		},
+		Flow: config.Flow{
+			Channel: "wechat",
+		},
 		Gpt: config.Gpt{
 			Provider: "openai",
 			Api:      "https://openai.com/api",

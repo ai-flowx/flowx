@@ -3,10 +3,12 @@ module github.com/ai-flowx/flowx
 go 1.23.4
 
 require (
-	github.com/ai-flowx/toolx v0.9.0
+	github.com/ai-flowx/toolx v0.10.0
 	github.com/amikos-tech/chroma-go v0.1.5-0.20241103135957-1b1e6ef18500
+	github.com/eatmoreapple/openwechat v1.4.10
 	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/pkg/errors v0.9.1
+	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
 	github.com/stretchr/testify v1.10.0

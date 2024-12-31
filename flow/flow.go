@@ -3,13 +3,14 @@ package flow
 import (
 	"context"
 
-	"golang.org/x/sync/errgroup"
-
 	"github.com/ai-flowx/flowx/memory"
 	"github.com/ai-flowx/flowx/tool"
+	"github.com/pkg/errors"
 )
 
 const (
+	channelWeChat = "wechat"
+
 	routineNum = -1
 )
 
@@ -20,19 +21,29 @@ type Flow interface {
 }
 
 type Config struct {
-	Port string
-
-	Memory memory.Memory
-	Tool   tool.Tool
+	Channel string
+	Port    string
+	Memory  memory.Memory
+	Tool    tool.Tool
 }
 
 type flow struct {
 	cfg *Config
+	fl  Flow
 }
 
 func New(_ context.Context, cfg *Config) Flow {
+	var fl Flow
+
+	if cfg.Channel == channelWeChat {
+		fl = &WeChat{}
+	} else {
+		// BYPASS
+	}
+
 	return &flow{
 		cfg: cfg,
+		fl:  fl,
 	}
 }
 
@@ -40,24 +51,25 @@ func DefaultConfig() *Config {
 	return &Config{}
 }
 
-func (f *flow) Init(_ context.Context) error {
+func (f *flow) Init(ctx context.Context) error {
+	if err := f.fl.Init(ctx); err != nil {
+		return errors.Wrap(err, "failed to init\n")
+	}
+
 	return nil
 }
 
-func (f *flow) Deinit(_ context.Context) error {
+func (f *flow) Deinit(ctx context.Context) error {
+	if err := f.fl.Deinit(ctx); err != nil {
+		return errors.Wrap(err, "failed to deinit\n")
+	}
+
 	return nil
 }
 
 func (f *flow) Run(ctx context.Context) error {
-	g, _ := errgroup.WithContext(ctx)
-	g.SetLimit(routineNum)
-
-	g.Go(func() error {
-		return nil
-	})
-
-	if err := g.Wait(); err != nil {
-		return err
+	if err := f.fl.Run(ctx); err != nil {
+		return errors.Wrap(err, "failed to run\n")
 	}
 
 	return nil

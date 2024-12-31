@@ -8,6 +8,7 @@ var (
 
 type Config struct {
 	Cache  Cache  `yaml:"cache"`
+	Flow   Flow   `yaml:"flow"`
 	Gpt    Gpt    `yaml:"gpt"`
 	Memory Memory `yaml:"memory"`
 	Store  Store  `yaml:"store"`
@@ -17,6 +18,10 @@ type Config struct {
 type Cache struct {
 	Provider string `yaml:"provider"`
 	Url      string `yaml:"url"`
+}
+
+type Flow struct {
+	Channel string `yaml:"channel"`
 }
 
 type Gpt struct {

@@ -8,7 +8,6 @@ import (
 	"github.com/ai-flowx/toolx/decorator"
 	"github.com/ai-flowx/toolx/hello"
 	"github.com/ai-flowx/toolx/structuredtool"
-	"github.com/ai-flowx/toolx/wechat"
 )
 
 type Tool interface {
@@ -97,8 +96,7 @@ func (t *tool) initProvider(_ context.Context) error {
 	t.toolx = append(t.toolx,
 		decorator.Decorator{},
 		hello.Hello{},
-		structuredtool.StructuredTool{},
-		wechat.WeChat{})
+		structuredtool.StructuredTool{})
 
 	return nil
 }

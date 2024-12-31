@@ -1,6 +1,8 @@
 cache:
   provider: cachex
   url: http://127.0.0.1:8081
+flow:
+  channel: wechat
 gpt:
   provider: openai
   api: https://openai.com/api
@@ -15,4 +17,3 @@ tool:
   - name: decorator
   - name: hello
   - name: structuredtool
-  - name: wechat
