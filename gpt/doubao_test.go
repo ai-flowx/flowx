@@ -19,14 +19,6 @@ func initDoubaoChatTest(_ context.Context) DoubaoChat {
 	}
 }
 
-func initDoubaoVisionTest(_ context.Context) DoubaoVision {
-	return DoubaoVision{
-		Api:   "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
-		Model: "ep-*",
-		Key:   "8429f8ab-*",
-	}
-}
-
 func TestDoubaoChatInit(t *testing.T) {
 	ctx := context.Background()
 	c := initDoubaoChatTest(ctx)
@@ -55,38 +47,19 @@ func TestDoubaoChatRun(t *testing.T) {
 		_ = c.Deinit(ctx)
 	}(&c, ctx)
 
-	_, err := c.Run(ctx, "hello world")
-	assert.Equal(t, nil, err)
-}
+	r := ChatRequest{
+		Messages: []ChatMessage{
+			{
+				Role:    "system",
+				Content: "You are a helpful assistant.",
+			},
+			{
+				Role:    "user",
+				Content: "Hello!",
+			},
+		},
+	}
 
-func TestDoubaoVisionInit(t *testing.T) {
-	ctx := context.Background()
-	v := initDoubaoVisionTest(ctx)
-
-	err := v.Init(ctx)
-	assert.Equal(t, nil, err)
-}
-
-func TestDoubaoVisionDeinit(t *testing.T) {
-	ctx := context.Background()
-	v := initDoubaoVisionTest(ctx)
-
-	_ = v.Init(ctx)
-
-	err := v.Deinit(ctx)
-	assert.Equal(t, nil, err)
-}
-
-func TestDoubaoVisionRun(t *testing.T) {
-	ctx := context.Background()
-	v := initDoubaoVisionTest(ctx)
-
-	_ = v.Init(ctx)
-
-	defer func(v *DoubaoVision, ctx context.Context) {
-		_ = v.Deinit(ctx)
-	}(&v, ctx)
-
-	_, err := v.Run(ctx, "png-base64")
+	_, err := c.Chat(ctx, &r)
 	assert.Equal(t, nil, err)
 }

@@ -4,43 +4,8 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
-)
-
-const (
-	chatMessage = `
-		[
-		  {
-		    "role": "system",
-		    "content": "You are a helpful assistant."
-		  },
-		  {
-		    "role": "user",
-		    "content": "%s"
-		  }
-		]`
-
-	visionMessage = `
-		[
-		  {
-		    "role": "user",
-		    "content": [
-		      {
-		        "type": "text",
-		        "text": "提取图片文字，严格保留段落和内容格式"
-		      },
-		      {
-		        "type": "image_url",
-		        "image_url": {
-		          "detail": "high",
-		          "url": "data:image/png;base64,%s"
-		        }
-		      }
-		    ]
-		  }
-		]`
 )
 
 type DoubaoChat struct {
@@ -49,97 +14,65 @@ type DoubaoChat struct {
 	Key   string
 }
 
-type ChatPrompt struct {
-	Messages []ChatMessages `json:"messages"`
+type DoubaoChatResponse struct {
+	Id      string             `json:"id"`
+	Model   string             `json:"model"`
+	Created int64              `json:"created"`
+	Object  string             `json:"object"`
+	Choices []DoubaoChatChoice `json:"choices"`
+	Usage   DoubaoChatUsage    `json:"usage"`
 }
 
-type ChatMessages struct {
-	Role    string `json:"role"`
-	Content string `json:"content"`
+type DoubaoChatChoice struct {
+	Index        int                `json:"index"`
+	FinishReason string             `json:"finish_reason"`
+	Message      DoubaoChatMessage  `json:"message"`
+	Logprobs     DoubaoChatLogprobs `json:"logprobs"`
 }
 
-type ChatResponse struct {
-	Id      string       `json:"id"`
-	Object  string       `json:"object"`
-	Created int64        `json:"created"`
-	Model   string       `json:"model"`
-	Choices []ChatChoice `json:"choices"`
-	Usage   ChatUsage    `json:"usage"`
+type DoubaoChatMessage struct {
+	Role      string               `json:"role"`
+	Content   string               `json:"content"`
+	ToolCalls []DoubaoChatToolCall `json:"tool_calls"`
 }
 
-type ChatChoice struct {
-	Index        int         `json:"index"`
-	Message      ChatMessage `json:"message"`
-	LogProbs     bool        `json:"log_probs"`
-	FinishReason string      `json:"finish_reason"`
+type DoubaoChatUsage struct {
+	PromptTokens        int                           `json:"prompt_tokens"`
+	CompletionTokens    int                           `json:"completion_tokens"`
+	TotalTokens         int                           `json:"total_tokens"`
+	PromptTokensDetails DoubaoChatPromptTokensDetails `json:"prompt_tokens_details"`
 }
 
-type ChatMessage struct {
-	Role    string `json:"role"`
-	Content string `json:"content"`
-}
-
-type ChatUsage struct {
-	PromptTokens        int                     `json:"prompt_tokens"`
-	CompletionTokens    int                     `json:"completion_tokens"`
-	TotalTokens         int                     `json:"total_tokens"`
-	PromptTokensDetails ChatPromptTokensDetails `json:"prompt_tokens_details"`
-}
-
-type ChatPromptTokensDetails struct {
+type DoubaoChatPromptTokensDetails struct {
 	CachedTokens int `json:"cached_tokens"`
 }
 
-type DoubaoVision struct {
-	Api   string
-	Model string
-	Key   string
+type DoubaoChatLogprobs struct {
+	Content []DoubaoChatTokenLogprob `json:"content"`
 }
 
-type VisionPrompt struct {
-	Messages []VisionMessages `json:"messages"`
+type DoubaoChatTokenLogprob struct {
+	Token       string                 `json:"token"`
+	Bytes       []int                  `json:"bytes"`
+	Logprob     float64                `json:"logprob"`
+	TopLogprobs []DoubaoChatTopLogprob `json:"top_logprobs"`
 }
 
-type VisionMessages struct {
-	Role    string          `json:"role"`
-	Content []VisionContent `json:"content"`
+type DoubaoChatTopLogprob struct {
+	Token   string  `json:"token"`
+	Bytes   []int   `json:"bytes"`
+	Logprob float64 `json:"logprob"`
 }
 
-type VisionContent struct {
-	Type     string         `json:"type"`
-	Text     string         `json:"text"`
-	ImageUrl VisionImageUrl `json:"image_url"`
+type DoubaoChatToolCall struct {
+	Id       string             `json:"id"`
+	Type     string             `json:"type"`
+	Function DoubaoChatFunction `json:"function"`
 }
 
-type VisionImageUrl struct {
-	Url string `json:"url"`
-}
-
-type VisionResponse struct {
-	Id      string         `json:"id"`
-	Object  string         `json:"object"`
-	Created int64          `json:"created"`
-	Model   string         `json:"model"`
-	Choices []VisionChoice `json:"choices"`
-	Usage   VisionUsage    `json:"usage"`
-}
-
-type VisionChoice struct {
-	Index        int           `json:"index"`
-	Message      VisionMessage `json:"message"`
-	LogProbs     bool          `json:"log_probs"`
-	FinishReason string        `json:"finish_reason"`
-}
-
-type VisionMessage struct {
-	Role    string `json:"role"`
-	Content string `json:"content"`
-}
-
-type VisionUsage struct {
-	PromptTokens     int `json:"prompt_tokens"`
-	CompletionTokens int `json:"completion_tokens"`
-	TotalTokens      int `json:"total_tokens"`
+type DoubaoChatFunction struct {
+	Name      string `json:"name"`
+	Arguments string `json:"arguments"`
 }
 
 func (c *DoubaoChat) Init(_ context.Context) error {
@@ -150,17 +83,19 @@ func (c *DoubaoChat) Deinit(_ context.Context) error {
 	return nil
 }
 
-func (c *DoubaoChat) Run(_ context.Context, content string) ([]string, error) {
-	var res ChatResponse
+func (c *DoubaoChat) Chat(_ context.Context, request *ChatRequest) (ChatResponse, error) {
+	var buf bytes.Buffer
+	var res DoubaoChatResponse
 
-	buf := fmt.Sprintf(`{
-		"model": "%s",
-		"messages": %s
-	}`, c.Model, fmt.Sprintf(chatMessage, content))
+	request.Model = c.Model
 
-	req, err := http.NewRequest("POST", c.Api, bytes.NewBuffer([]byte(buf)))
+	if err := json.NewEncoder(&buf).Encode(request); err != nil {
+		return ChatResponse{}, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, c.Api, &buf)
 	if err != nil {
-		return nil, err
+		return ChatResponse{}, err
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -169,7 +104,7 @@ func (c *DoubaoChat) Run(_ context.Context, content string) ([]string, error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		return nil, err
+		return ChatResponse{}, err
 	}
 
 	defer func(Body io.ReadCloser) {
@@ -178,77 +113,26 @@ func (c *DoubaoChat) Run(_ context.Context, content string) ([]string, error) {
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return ChatResponse{}, err
 	}
 
 	if err := json.Unmarshal((body), &res); err != nil {
-		return nil, err
+		return ChatResponse{}, err
 	}
 
 	return c.parseContent(&res), nil
 }
 
-func (v *DoubaoChat) parseContent(res *ChatResponse) []string {
-	var buf []string
+func (c *DoubaoChat) parseContent(res *DoubaoChatResponse) ChatResponse {
+	var buf ChatResponse
+
+	buf.Id = res.Id
 
 	for _, item := range res.Choices {
-		buf = append(buf, item.Message.Content)
-	}
-
-	return buf
-}
-
-func (v *DoubaoVision) Init(_ context.Context) error {
-	return nil
-}
-
-func (v *DoubaoVision) Deinit(_ context.Context) error {
-	return nil
-}
-
-func (v *DoubaoVision) Run(_ context.Context, content string) ([]string, error) {
-	var res VisionResponse
-
-	buf := fmt.Sprintf(`{
-		"model": "%s",
-		"messages": %s
-	}`, v.Model, fmt.Sprintf(visionMessage, content))
-
-	req, err := http.NewRequest("POST", v.Api, bytes.NewBuffer([]byte(buf)))
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+v.Key)
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-
-	defer func(Body io.ReadCloser) {
-		_ = Body.Close()
-	}(resp.Body)
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal((body), &res); err != nil {
-		return nil, err
-	}
-
-	return v.parseContent(&res), nil
-}
-
-func (v *DoubaoVision) parseContent(res *VisionResponse) []string {
-	var buf []string
-
-	for _, item := range res.Choices {
-		buf = append(buf, item.Message.Content)
+		var b ChatChoice
+		b.Message.Role = item.Message.Role
+		b.Message.Content = item.Message.Content
+		buf.Choices = append(buf.Choices, b)
 	}
 
 	return buf

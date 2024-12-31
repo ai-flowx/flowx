@@ -7,14 +7,22 @@ import (
 )
 
 const (
-	providerDoubaoChat   = "doubao-chat"
-	providerDoubaoVision = "doubao-vision"
+	DefaultChatStream           = false
+	DefaultChatMaxTokens        = 4096
+	DefaultChatFrequencyPenalty = 0
+	DefaultChatPresencePenalty  = 0
+	DefaultChatTemperature      = 1
+	DefaultChatTopP             = 0.7
+)
+
+const (
+	providerDoubaoChat = "doubao-chat"
 )
 
 type Gpt interface {
 	Init(context.Context) error
 	Deinit(context.Context) error
-	Run(context.Context, string) ([]string, error)
+	Chat(context.Context, *ChatRequest) (ChatResponse, error)
 }
 
 type Config struct {
@@ -22,6 +30,31 @@ type Config struct {
 	Api      string
 	Model    string
 	Key      string
+}
+
+type ChatRequest struct {
+	Model            string        `json:"model"`
+	Messages         []ChatMessage `json:"messages"`
+	Stream           bool          `json:"stream"`
+	MaxTokens        int64         `json:"max_tokens"`
+	FrequencyPenalty float64       `json:"frequency_penalty"`
+	PresencePenalty  float64       `json:"presence_penalty"`
+	Temperature      float64       `json:"temperature"`
+	TopP             float64       `json:"top_p"`
+}
+
+type ChatResponse struct {
+	Id      string       `json:"id"`
+	Choices []ChatChoice `json:"choices"`
+}
+
+type ChatChoice struct {
+	Message ChatMessage `json:"message"`
+}
+
+type ChatMessage struct {
+	Role    string `json:"role"`
+	Content string `json:"content"`
 }
 
 type gpt struct {
@@ -34,12 +67,6 @@ func New(_ context.Context, cfg *Config) Gpt {
 
 	if cfg.Provider == providerDoubaoChat {
 		gt = &DoubaoChat{
-			Api:   cfg.Api,
-			Model: cfg.Model,
-			Key:   cfg.Key,
-		}
-	} else if cfg.Provider == providerDoubaoVision {
-		gt = &DoubaoVision{
 			Api:   cfg.Api,
 			Model: cfg.Model,
 			Key:   cfg.Key,
@@ -74,10 +101,10 @@ func (g *gpt) Deinit(ctx context.Context) error {
 	return nil
 }
 
-func (g *gpt) Run(ctx context.Context, content string) ([]string, error) {
-	buf, err := g.gt.Run(ctx, content)
+func (g *gpt) Chat(ctx context.Context, request *ChatRequest) (ChatResponse, error) {
+	buf, err := g.gt.Chat(ctx, request)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to run\n")
+		return ChatResponse{}, errors.Wrap(err, "failed to run\n")
 	}
 
 	return buf, nil
