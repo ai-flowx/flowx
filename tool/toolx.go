@@ -9,5 +9,5 @@ type ToolX interface {
 	Deinit(context.Context) error
 	Name(context.Context) string
 	Description(context.Context) string
-	Call(context.Context, ...interface{}) (string, error)
+	Call(context.Context, func(context.Context, interface{}) (interface{}, error), ...interface{}) (string, error)
 }

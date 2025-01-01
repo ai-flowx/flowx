@@ -1,7 +1,7 @@
 github.com/Masterminds/semver v1.5.0 h1:H65muMkzWKEuNDnfl9d70GUjFniHKHRbFPGBuZ3QEww=
 github.com/Masterminds/semver v1.5.0/go.mod h1:MB6lktGJrhw8PrUyiEoblNEGEQ+RzHPF078ddwwvV3Y=
-github.com/ai-flowx/toolx v0.11.0 h1:qh+QEpU+6xOspCz4FBy2uVvVeYkI4MwDpaAGbWzthNU=
-github.com/ai-flowx/toolx v0.11.0/go.mod h1:ApD+YGBsPWOt/nL3Q/oYIU+WLblggHdbH3cFRHEzGu8=
+github.com/ai-flowx/toolx v0.12.0 h1:j00JvG4niuTR5BWRCVBCCJoM7fcaXuRs0TZbH5QDWrg=
+github.com/ai-flowx/toolx v0.12.0/go.mod h1:ApD+YGBsPWOt/nL3Q/oYIU+WLblggHdbH3cFRHEzGu8=
 github.com/amikos-tech/chroma-go v0.1.5-0.20241103135957-1b1e6ef18500 h1:blChbPuVerKrTKNMNSnI5To0DyakV6UWYteXzczkK4E=
 github.com/amikos-tech/chroma-go v0.1.5-0.20241103135957-1b1e6ef18500/go.mod h1:5pEBH3DVz1fZ1/mnY+UgES0fqkIR1YmkPfvJv0Xwry8=
 github.com/cpuguy83/go-md2man/v2 v2.0.4/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=

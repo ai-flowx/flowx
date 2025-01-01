@@ -61,9 +61,13 @@ func TestToolXRun(t *testing.T) {
 		_ = _t.Deinit(ctx)
 	}(&_t, ctx)
 
-	_, err := _t.Run(ctx, nameToolXDecoratorTest, "arg")
+	c := func(context.Context, interface{}) (interface{}, error) {
+		return nil, nil
+	}
+
+	_, err := _t.Run(ctx, nameToolXDecoratorTest, c, "arg")
 	assert.Equal(t, nil, err)
 
-	_, err = _t.Run(ctx, nameToolXHelloTest, "arg")
+	_, err = _t.Run(ctx, nameToolXHelloTest, c, "arg")
 	assert.Equal(t, nil, err)
 }

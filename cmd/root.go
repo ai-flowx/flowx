@@ -56,7 +56,7 @@ var rootCmd = &cobra.Command{
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
-		t, err := initTool(ctx, &cfg)
+		t, err := initTool(ctx, &cfg, g)
 		if err != nil {
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
@@ -141,11 +141,13 @@ func initMemory(ctx context.Context, cfg *config.Config, st store.Store) (memory
 	return memory.New(ctx, c), nil
 }
 
-func initTool(ctx context.Context, cfg *config.Config) (tool.Tool, error) {
+func initTool(ctx context.Context, cfg *config.Config, _gpt gpt.Gpt) (tool.Tool, error) {
 	c := tool.DefaultConfig()
 	if c == nil {
 		return nil, errors.New("failed to config\n")
 	}
+
+	c.Gpt = _gpt
 
 	for _, item := range cfg.Tool {
 		c.Provider = append(c.Provider, tool.Provider{

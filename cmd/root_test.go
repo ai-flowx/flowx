@@ -70,7 +70,9 @@ func TestInitMemory(t *testing.T) {
 func TestInitTool(t *testing.T) {
 	ctx := context.Background()
 
-	_, err := initTool(ctx, &testConfig)
+	g, _ := initGpt(ctx, &testConfig)
+
+	_, err := initTool(ctx, &testConfig, g)
 	assert.Equal(t, nil, err)
 }
 
@@ -82,7 +84,7 @@ func TestInitFlow(t *testing.T) {
 	g, _ := initGpt(ctx, &testConfig)
 	s, _ := initStore(ctx, &testConfig)
 	m, _ := initMemory(ctx, &testConfig, s)
-	_t, _ := initTool(ctx, &testConfig)
+	_t, _ := initTool(ctx, &testConfig, g)
 
 	_, err := initFlow(ctx, &testConfig, g, m, _t)
 	assert.Equal(t, nil, err)
