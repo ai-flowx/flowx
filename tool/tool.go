@@ -108,10 +108,10 @@ func (t *tool) Run(ctx context.Context, name string, args ...interface{}) (strin
 
 func (t *tool) initProvider(_ context.Context) error {
 	t.toolx = append(t.toolx,
-		decorator.Decorator{},
-		gerrit.Gerrit{},
-		hello.Hello{},
-		structuredtool.StructuredTool{})
+		&decorator.Decorator{},
+		&gerrit.Gerrit{},
+		&hello.Hello{},
+		&structuredtool.StructuredTool{})
 
 	return nil
 }
