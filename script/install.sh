@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # Install python
-sudo apt install python3 python3-dev pkg-config
+sudo apt install -y pkg-config python3 python3-dev

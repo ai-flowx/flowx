@@ -1,7 +1,8 @@
 # flowx
 
 [![Build Status](https://github.com/ai-flowx/flowx/workflows/ci/badge.svg?branch=main&event=push)](https://github.com/ai-flowx/flowx/actions?query=workflow%3Aci)
-[![codecov](https://codecov.io/gh/ai-flowx/flowx/branch/main/graph/badge.svg?token=El8oiyaIsD)](https://codecov.io/gh/ai-flowx/flowx)
+[![codecov](https://codecov.io/gh/ai-flowx/flowx/graph/badge.svg?token=W7B6KC9CWW)](https://codecov.io/gh/ai-flowx/flowx)
+[![Docker](https://img.shields.io/docker/pulls/craftslab/flowx)](https://hub.docker.com/r/craftslab/flowx)
 [![Go Report Card](https://goreportcard.com/badge/github.com/ai-flowx/flowx)](https://goreportcard.com/report/github.com/ai-flowx/flowx)
 [![License](https://img.shields.io/github/license/ai-flowx/flowx.svg)](https://github.com/ai-flowx/flowx/blob/main/LICENSE)
 [![Tag](https://img.shields.io/github/tag/ai-flowx/flowx.svg)](https://github.com/ai-flowx/flowx/tags)
