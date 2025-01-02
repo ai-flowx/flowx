@@ -8,10 +8,10 @@ import (
 	"github.com/pkg/errors"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 const (
-	dbName   = "gorm"
 	sslMode  = "disable"
 	timeZone = "Asia/Shanghai"
 )
@@ -29,10 +29,11 @@ func (p *Postgres) Init(_ context.Context, _ string) error {
 	var db *sql.DB
 	var err error
 
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=%s TimeZone=%s",
-		p.Host, p.User, p.Pass, dbName, p.Port, sslMode, timeZone)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s port=%d sslmode=%s TimeZone=%s",
+		p.Host, p.User, p.Pass, p.Port, sslMode, timeZone)
 
-	if p.db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{}); err != nil {
+	if p.db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Error)}); err != nil {
 		return errors.Wrap(err, "failed to open database\n")
 	}
 
