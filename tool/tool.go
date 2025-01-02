@@ -117,7 +117,7 @@ func (t *tool) initProvider(_ context.Context) error {
 }
 
 func (t *tool) deinitProvider(_ context.Context) error {
-	t.toolx = t.toolx[:0]
+	clear(t.toolx)
 
 	return nil
 }
