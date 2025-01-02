@@ -12,8 +12,11 @@ import (
 var (
 	testConfig = config.Config{
 		Cache: config.Cache{
-			Provider: "gptcache",
-			Url:      "http://127.0.0.1:8081",
+			Provider: "cachex",
+			Host:     "127.0.0.1",
+			Port:     8081,
+			User:     "user",
+			Pass:     "pass",
 		},
 		Flow: config.Flow{
 			Channel: "wechat",
@@ -28,9 +31,12 @@ var (
 			Type: "shortterm",
 		},
 		Store: config.Store{
-			Provider: "chroma",
-			Url:      "http://127.0.0.1:8082",
-			Path:     "",
+			Provider: "vecx",
+			Host:     "127.0.0.1",
+			Port:     8082,
+			Path:     "/path/to/file",
+			User:     "user",
+			Pass:     "pass",
 		},
 		Tool: []config.Tool{
 			{

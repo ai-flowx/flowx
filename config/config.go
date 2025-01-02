@@ -17,7 +17,10 @@ type Config struct {
 
 type Cache struct {
 	Provider string `yaml:"provider"`
-	Url      string `yaml:"url"`
+	Host     string `yaml:"host"`
+	Port     int    `yaml:"port"`
+	User     string `yaml:"user"`
+	Pass     string `yaml:"pass"`
 }
 
 type Flow struct {
@@ -37,8 +40,11 @@ type Memory struct {
 
 type Store struct {
 	Provider string `yaml:"provider"`
-	Url      string `yaml:"url"`
+	Host     string `yaml:"host"`
+	Port     int    `yaml:"port"`
 	Path     string `yaml:"path"`
+	User     string `yaml:"user"`
+	Pass     string `yaml:"pass"`
 }
 
 type Tool struct {

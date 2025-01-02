@@ -12,7 +12,8 @@ import (
 )
 
 const (
-	urlTestChroma = "http://127.0.0.1:8082"
+	hostTestChroma = "127.0.0.1"
+	portTestChroma = 8082
 
 	agentTestChroma = "agentTestChroma"
 	nameTestChroma  = "nameTestChroma"
@@ -21,7 +22,8 @@ const (
 
 func initChromaTest(_ context.Context) Chroma {
 	return Chroma{
-		Url: urlTestChroma,
+		Host: hostTestChroma,
+		Port: portTestChroma,
 	}
 }
 

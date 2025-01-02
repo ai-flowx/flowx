@@ -2,6 +2,7 @@ package store
 
 import (
 	"context"
+	"fmt"
 
 	chroma "github.com/amikos-tech/chroma-go"
 	"github.com/amikos-tech/chroma-go/types"
@@ -9,7 +10,8 @@ import (
 )
 
 type Chroma struct {
-	Url string
+	Host string
+	Port int
 
 	Client     *chroma.Client
 	Collection *chroma.Collection
@@ -19,7 +21,7 @@ type Chroma struct {
 func (c *Chroma) Init(ctx context.Context, name string) error {
 	var err error
 
-	if c.Client, err = chroma.NewClient(chroma.WithBasePath(c.Url)); err != nil {
+	if c.Client, err = chroma.NewClient(chroma.WithBasePath(fmt.Sprintf("%s:%d", c.Host, c.Port))); err != nil {
 		return errors.Wrap(err, "failed to create client\n")
 	}
 

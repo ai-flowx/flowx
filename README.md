@@ -53,19 +53,26 @@ An example of configuration in [config.yml](https://github.com/ai-flowx/flowx/bl
 ```yaml
 cache:
   provider: cachex
-  url: http://127.0.0.1:8081
+  host: 127.0.0.1
+  port: 8081
+  user: user
+  pass: pass
 flow:
   channel: wechat
 gpt:
-  provider: openai
-  api: https://openai.com/api
-  token: token
+  provider: doubao-chat
+  api: https://ark.cn-beijing.volces.com/api/v3/chat/completions
+  model: ep-*
+  key: 8429f8ab-*
 memory:
   type: shortterm
 store:
-  provider: ragx
-  url: http://127.0.0.1:8082
+  provider: vecx
+  host: 127.0.0.1
+  port: 8082
   path: /path/to/file
+  user: user
+  pass: pass
 tool:
   - name: decorator
   - name: gerrit

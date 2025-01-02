@@ -7,9 +7,10 @@ import (
 )
 
 const (
-	ProviderChroma = "chroma"
-	ProviderRagx   = "ragx"
-	ProviderSqlite = "sqlite"
+	ProviderChroma   = "chroma"
+	ProviderPostgres = "postgres"
+	ProviderSqlite   = "sqlite"
+	ProviderVecx     = "vecx"
 )
 
 type Store interface {
@@ -22,8 +23,11 @@ type Store interface {
 
 type Config struct {
 	Provider string
-	Url      string
+	Host     string
+	Port     int
 	Path     string
+	User     string
+	Pass     string
 }
 
 type Collection struct {
@@ -43,16 +47,20 @@ func New(_ context.Context, cfg *Config) Store {
 
 	if cfg.Provider == ProviderChroma {
 		st = &Chroma{
-			Url: cfg.Url,
+			Host: cfg.Host,
+			Port: cfg.Port,
 		}
-	} else if cfg.Provider == ProviderRagx {
-		st = &Ragx{
-			Url: cfg.Url,
+	} else if cfg.Provider == ProviderPostgres {
+		st = &Postgres{
+			Host: cfg.Host,
+			Port: cfg.Port,
 		}
 	} else if cfg.Provider == ProviderSqlite {
 		st = &Sqlite{
 			Path: cfg.Path,
 		}
+	} else if cfg.Provider == ProviderVecx {
+		st = &Vecx{}
 	} else {
 		// BYPASS
 	}

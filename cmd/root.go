@@ -123,8 +123,11 @@ func initStore(ctx context.Context, cfg *config.Config) (store.Store, error) {
 	}
 
 	c.Provider = cfg.Store.Provider
-	c.Url = cfg.Store.Url
+	c.Host = cfg.Store.Host
+	c.Port = cfg.Store.Port
 	c.Path = cfg.Store.Path
+	c.User = cfg.Store.User
+	c.Pass = cfg.Store.Pass
 
 	return store.New(ctx, c), nil
 }

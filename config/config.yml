@@ -1,6 +1,9 @@
 cache:
   provider: cachex
-  url: http://127.0.0.1:8081
+  host: 127.0.0.1
+  port: 8081
+  user: user
+  pass: pass
 flow:
   channel: wechat
 gpt:
@@ -11,9 +14,12 @@ gpt:
 memory:
   type: shortterm
 store:
-  provider: ragx
-  url: http://127.0.0.1:8082
+  provider: vecx
+  host: 127.0.0.1
+  port: 8082
   path: /path/to/file
+  user: user
+  pass: pass
 tool:
   - name: decorator
   - name: gerrit
