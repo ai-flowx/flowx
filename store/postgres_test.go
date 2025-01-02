@@ -5,13 +5,31 @@
 package store
 
 import (
+	"context"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
+func initPostgresTest(_ context.Context) Postgres {
+	return Postgres{
+		Host: "127.0.0.1",
+		Port: 5432,
+		User: "postgres",
+		Pass: "postgres",
+	}
+}
+
 func TestPostgresInit(t *testing.T) {
-	assert.Equal(t, nil, nil)
+	ctx := context.Background()
+	p := initPostgresTest(ctx)
+
+	defer func(p *Postgres, ctx context.Context) {
+		_ = p.Deinit(ctx)
+	}(&p, ctx)
+
+	err := p.Init(ctx, "")
+	assert.Equal(t, nil, err)
 }
 
 func TestPostgresDeinit(t *testing.T) {

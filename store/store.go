@@ -54,6 +54,8 @@ func New(_ context.Context, cfg *Config) Store {
 		st = &Postgres{
 			Host: cfg.Host,
 			Port: cfg.Port,
+			User: cfg.User,
+			Pass: cfg.Pass,
 		}
 	} else if cfg.Provider == ProviderSqlite {
 		st = &Sqlite{
