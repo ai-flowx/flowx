@@ -151,6 +151,7 @@ Project License can be found [here](LICENSE).
 ### Store
 
 - [chroma-go](https://github.com/amikos-tech/chroma-go)
+- [setting-up-postgresql-server-in-docker-container-on-ubuntu](https://medium.com/@maheshshelke/setting-up-postgresql-server-in-docker-container-on-ubuntu-a-step-by-step-guide-f21f8973d6d7)
 
 ### Tools
 
