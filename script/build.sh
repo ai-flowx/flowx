@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PKG_CONFIG_PATH=$PWD
+
 build=$(date +%FT%T%z)
 commit=$(git rev-parse --short HEAD)
 version="$1"
