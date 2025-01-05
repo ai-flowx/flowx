@@ -1,4 +1,4 @@
-package team
+package process
 
 import (
 	"testing"
@@ -6,6 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTeam(t *testing.T) {
+func TestProcess(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }

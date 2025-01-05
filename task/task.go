@@ -2,6 +2,9 @@ package task
 
 import (
 	"context"
+
+	"github.com/ai-flowx/flowx/agent"
+	"github.com/ai-flowx/flowx/tool"
 )
 
 type Task interface {
@@ -10,7 +13,14 @@ type Task interface {
 	Run(context.Context) error
 }
 
-type Config struct{}
+type Config struct {
+	Description    string
+	ExpectedOutput string
+	Name           string
+	Agent          agent.Agent
+	Tool           []tool.Tool
+	AsyncExecution bool
+}
 
 type task struct {
 	cfg *Config
