@@ -141,6 +141,11 @@ Project License can be found [here](LICENSE).
 - [modelfile](https://github.com/ollama/ollama/blob/main/docs/modelfile.md)
 - [semantic-kernel](https://github.com/microsoft/semantic-kernel)
 
+### Memory
+
+- [memoryrepository-for-ai-npc](https://ieeexplore.ieee.org/document/10508558)
+- [memoryrepository-for-ai-npc](https://github.com/Formyselfonly/MemoryRepository_for_AI_NPC)
+
 ### Protocol
 
 - [claude-mcp](https://ai-claude.net/mcp/)
