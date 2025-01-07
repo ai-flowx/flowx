@@ -3,7 +3,7 @@ module github.com/ai-flowx/flowx
 go 1.23.4
 
 require (
-	github.com/ai-flowx/toolx v0.17.0
+	github.com/ai-flowx/toolx v0.18.0
 	github.com/amikos-tech/chroma-go v0.1.5-0.20241103135957-1b1e6ef18500
 	github.com/eatmoreapple/openwechat v1.4.10
 	github.com/mattn/go-sqlite3 v1.14.24
@@ -70,5 +70,6 @@ require (
 	golang.org/x/text v0.21.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
