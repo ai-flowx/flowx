@@ -6,10 +6,8 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/ai-flowx/flowx/gpt"
-	"github.com/ai-flowx/toolx/decorator"
 	"github.com/ai-flowx/toolx/gerrit"
 	"github.com/ai-flowx/toolx/hello"
-	"github.com/ai-flowx/toolx/structuredtool"
 )
 
 type Tool interface {
@@ -108,10 +106,8 @@ func (t *tool) Run(ctx context.Context, name string, args ...interface{}) (strin
 
 func (t *tool) initProvider(_ context.Context) error {
 	t.toolx = append(t.toolx,
-		&decorator.Decorator{},
 		&gerrit.Gerrit{},
-		&hello.Hello{},
-		&structuredtool.StructuredTool{})
+		&hello.Hello{})
 
 	return nil
 }

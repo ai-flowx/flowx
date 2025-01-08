@@ -21,7 +21,5 @@ store:
   user: user
   pass: pass
 tool:
-  - name: decorator
   - name: gerrit
   - name: hello
-  - name: structuredtool
