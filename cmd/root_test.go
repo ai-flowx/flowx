@@ -57,6 +57,13 @@ func TestInitGpt(t *testing.T) {
 	assert.Equal(t, nil, err)
 }
 
+func TestInitPrompt(t *testing.T) {
+	ctx := context.Background()
+
+	_, err := initPrompt(ctx, &testConfig)
+	assert.Equal(t, nil, err)
+}
+
 func TestInitStore(t *testing.T) {
 	ctx := context.Background()
 
@@ -82,17 +89,30 @@ func TestInitTool(t *testing.T) {
 	assert.Equal(t, nil, err)
 }
 
+func TestInitAgent(t *testing.T) {
+	ctx := context.Background()
+
+	g, _ := initGpt(ctx, &testConfig)
+	p, _ := initPrompt(ctx, &testConfig)
+	_t, _ := initTool(ctx, &testConfig, g)
+
+	_, err := initAgent(ctx, &testConfig, g, p, _t)
+	assert.Equal(t, nil, err)
+}
+
 func TestInitFlow(t *testing.T) {
 	ctx := context.Background()
 
 	listenPort = ":8080"
 
 	g, _ := initGpt(ctx, &testConfig)
+	p, _ := initPrompt(ctx, &testConfig)
 	s, _ := initStore(ctx, &testConfig)
 	m, _ := initMemory(ctx, &testConfig, s)
 	_t, _ := initTool(ctx, &testConfig, g)
+	a, _ := initAgent(ctx, &testConfig, g, p, _t)
 
-	_, err := initFlow(ctx, &testConfig, g, m, _t)
+	_, err := initFlow(ctx, &testConfig, g, m, _t, a)
 	assert.Equal(t, nil, err)
 }
 

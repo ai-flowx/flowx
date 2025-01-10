@@ -12,10 +12,12 @@ import (
 	"github.com/spf13/viper"
 	"golang.org/x/sync/errgroup"
 
+	"github.com/ai-flowx/flowx/agent"
 	"github.com/ai-flowx/flowx/config"
 	"github.com/ai-flowx/flowx/flow"
 	"github.com/ai-flowx/flowx/gpt"
 	"github.com/ai-flowx/flowx/memory"
+	"github.com/ai-flowx/flowx/prompt"
 	"github.com/ai-flowx/flowx/store"
 	"github.com/ai-flowx/flowx/tool"
 )
@@ -46,6 +48,11 @@ var rootCmd = &cobra.Command{
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
+		p, err := initPrompt(ctx, &cfg)
+		if err != nil {
+			_, _ = fmt.Fprintln(os.Stderr, err.Error())
+			os.Exit(1)
+		}
 		s, err := initStore(ctx, &cfg)
 		if err != nil {
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
@@ -61,7 +68,12 @@ var rootCmd = &cobra.Command{
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
 		}
-		f, err := initFlow(ctx, &cfg, g, m, t)
+		a, err := initAgent(ctx, &cfg, g, p, t)
+		if err != nil {
+			_, _ = fmt.Fprintln(os.Stderr, err.Error())
+			os.Exit(1)
+		}
+		f, err := initFlow(ctx, &cfg, g, m, t, a)
 		if err != nil {
 			_, _ = fmt.Fprintln(os.Stderr, err.Error())
 			os.Exit(1)
@@ -116,6 +128,15 @@ func initGpt(ctx context.Context, cfg *config.Config) (gpt.Gpt, error) {
 	return gpt.New(ctx, c), nil
 }
 
+func initPrompt(ctx context.Context, _ *config.Config) (prompt.Prompt, error) {
+	c := prompt.DefaultConfig()
+	if c == nil {
+		return nil, errors.New("failed to config\n")
+	}
+
+	return prompt.New(ctx, c), nil
+}
+
 func initStore(ctx context.Context, cfg *config.Config) (store.Store, error) {
 	c := store.DefaultConfig()
 	if c == nil {
@@ -161,7 +182,21 @@ func initTool(ctx context.Context, cfg *config.Config, _gpt gpt.Gpt) (tool.Tool,
 	return tool.New(ctx, c), nil
 }
 
-func initFlow(ctx context.Context, cfg *config.Config, _gpt gpt.Gpt, mem memory.Memory, _tool tool.Tool) (flow.Flow, error) {
+func initAgent(ctx context.Context, _ *config.Config, _gpt gpt.Gpt, _prompt prompt.Prompt, _tool tool.Tool) (agent.Agent, error) {
+	c := agent.DefaultConfig()
+	if c == nil {
+		return nil, errors.New("failed to config\n")
+	}
+
+	c.Gpt = _gpt
+	c.Prompt = _prompt
+	c.Tool = _tool
+
+	return agent.New(ctx, c), nil
+}
+
+func initFlow(ctx context.Context, cfg *config.Config, _gpt gpt.Gpt, mem memory.Memory,
+	_tool tool.Tool, _agent agent.Agent) (flow.Flow, error) {
 	c := flow.DefaultConfig()
 	if c == nil {
 		return nil, errors.New("failed to config\n")
@@ -172,6 +207,7 @@ func initFlow(ctx context.Context, cfg *config.Config, _gpt gpt.Gpt, mem memory.
 	c.Gpt = _gpt
 	c.Memory = mem
 	c.Tool = _tool
+	c.Agent = _agent
 
 	return flow.New(ctx, c), nil
 }

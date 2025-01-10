@@ -5,13 +5,14 @@ import (
 	"time"
 
 	"github.com/ai-flowx/flowx/gpt"
+	"github.com/ai-flowx/flowx/prompt"
 	"github.com/ai-flowx/flowx/tool"
 )
 
 type Agent interface {
 	Init(context.Context) error
 	Deinit(context.Context) error
-	Run(context.Context) error
+	Run(context.Context, string, string) (string, error)
 }
 
 type Config struct {
@@ -19,7 +20,7 @@ type Config struct {
 	Goal                 string
 	Backstory            string
 	Gpt                  gpt.Gpt
-	Tool                 []tool.Tool
+	Tool                 tool.Tool
 	MaxIter              int
 	MaxRpm               int
 	MaxExecutionTime     time.Duration
@@ -28,6 +29,7 @@ type Config struct {
 	PromptTemplate       string
 	ResponseTemplate     string
 	RespectContextWindow bool
+	Prompt               prompt.Prompt
 }
 
 type agent struct {
@@ -52,6 +54,6 @@ func (a *agent) Deinit(ctx context.Context) error {
 	return nil
 }
 
-func (a *agent) Run(ctx context.Context) error {
-	return nil
+func (a *agent) Run(ctx context.Context, _prompt, _context string) (string, error) {
+	return "", nil
 }

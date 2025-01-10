@@ -5,6 +5,7 @@ import (
 
 	"github.com/pkg/errors"
 
+	"github.com/ai-flowx/flowx/agent"
 	"github.com/ai-flowx/flowx/gpt"
 	"github.com/ai-flowx/flowx/memory"
 	"github.com/ai-flowx/flowx/tool"
@@ -26,6 +27,7 @@ type Config struct {
 	Gpt     gpt.Gpt
 	Memory  memory.Memory
 	Tool    tool.Tool
+	Agent   agent.Agent
 }
 
 type flow struct {
