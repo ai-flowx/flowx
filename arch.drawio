@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e" scale="2" border="0">
     <diagram id="8_WlqVr0ZAdrVBBNUXE_" name="Page-1">
-        <mxGraphModel dx="1386" dy="2068" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1631" dy="2227" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -48,9 +48,6 @@
                 </mxCell>
                 <mxCell id="75" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0077FF;strokeColor=none;" parent="1" vertex="1">
                     <mxGeometry x="1342" y="-20.75" width="165" height="816" as="geometry"/>
-                </mxCell>
-                <mxCell id="76" value="gpt" style="text;html=1;strokeColor=#FFFFFF;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontStyle=0;fontColor=#FFFFFF;" parent="1" vertex="1">
-                    <mxGeometry x="1384" y="758" width="81" height="24" as="geometry"/>
                 </mxCell>
                 <mxCell id="77" value="&lt;b&gt;openai&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="1379" y="371.75" width="91" height="30" as="geometry"/>
@@ -115,9 +112,6 @@
                 <mxCell id="106" value="&lt;b&gt;postgres&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="1126" y="521" width="91" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="108" value="chat" style="text;html=1;strokeColor=#FFFFFF;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontStyle=0;fontColor=#FFFFFF;" parent="1" vertex="1">
-                    <mxGeometry x="351" y="758" width="81" height="24" as="geometry"/>
-                </mxCell>
                 <mxCell id="109" value="&lt;b&gt;long-term&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="601.04" y="538" width="91" height="30" as="geometry"/>
                 </mxCell>
@@ -126,6 +120,12 @@
                 </mxCell>
                 <mxCell id="111" value="&lt;b&gt;task&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="1015.82" y="208" width="91" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="112" value="&lt;b style=&quot;font-size: 16px;&quot;&gt;chat&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="350.76" y="758" width="81.49" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="113" value="&lt;b style=&quot;font-size: 16px;&quot;&gt;gpt&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="1383.75" y="758" width="81.49" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
