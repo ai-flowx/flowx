@@ -10,7 +10,13 @@ type Prompt interface {
 	Run(context.Context) error
 }
 
-type Config struct{}
+type Config struct {
+	Provider string
+	Host     string
+	Port     int
+	User     string
+	Pass     string
+}
 
 type prompt struct {
 	cfg *Config

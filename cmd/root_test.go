@@ -30,10 +30,17 @@ var (
 		Memory: config.Memory{
 			Type: "shortterm",
 		},
+		Prompt: config.Prompt{
+			Provider: "cachex",
+			Host:     "127.0.0.1",
+			Port:     8082,
+			User:     "user",
+			Pass:     "pass",
+		},
 		Store: config.Store{
 			Provider: "vecx",
 			Host:     "127.0.0.1",
-			Port:     8082,
+			Port:     8083,
 			Path:     "/path/to/file",
 			User:     "user",
 			Pass:     "pass",

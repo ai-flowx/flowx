@@ -65,18 +65,22 @@ gpt:
   key: 8429f8ab-*
 memory:
   type: shortterm
+prompt:
+  provider: promptx
+  host: 127.0.0.1
+  port: 8082
+  user: user
+  pass: pass
 store:
   provider: vecx
   host: 127.0.0.1
-  port: 8082
+  port: 8083
   path: /path/to/file
   user: user
   pass: pass
 tool:
-  - name: decorator
   - name: gerrit
   - name: hello
-  - name: structuredtool
 ```
 
 

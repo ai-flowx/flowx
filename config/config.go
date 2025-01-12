@@ -11,6 +11,7 @@ type Config struct {
 	Flow   Flow   `yaml:"flow"`
 	Gpt    Gpt    `yaml:"gpt"`
 	Memory Memory `yaml:"memory"`
+	Prompt Prompt `yaml:"prompt"`
 	Store  Store  `yaml:"store"`
 	Tool   []Tool `yaml:"tool"`
 }
@@ -36,6 +37,14 @@ type Gpt struct {
 
 type Memory struct {
 	Type string `yaml:"type"`
+}
+
+type Prompt struct {
+	Provider string `yaml:"provider"`
+	Host     string `yaml:"host"`
+	Port     int    `yaml:"port"`
+	User     string `yaml:"user"`
+	Pass     string `yaml:"pass"`
 }
 
 type Store struct {

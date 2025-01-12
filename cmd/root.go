@@ -128,11 +128,17 @@ func initGpt(ctx context.Context, cfg *config.Config) (gpt.Gpt, error) {
 	return gpt.New(ctx, c), nil
 }
 
-func initPrompt(ctx context.Context, _ *config.Config) (prompt.Prompt, error) {
+func initPrompt(ctx context.Context, cfg *config.Config) (prompt.Prompt, error) {
 	c := prompt.DefaultConfig()
 	if c == nil {
 		return nil, errors.New("failed to config\n")
 	}
+
+	c.Provider = cfg.Prompt.Provider
+	c.Host = cfg.Prompt.Host
+	c.Port = cfg.Prompt.Port
+	c.User = cfg.Prompt.User
+	c.Pass = cfg.Prompt.Pass
 
 	return prompt.New(ctx, c), nil
 }
