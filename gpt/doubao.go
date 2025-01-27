@@ -9,9 +9,9 @@ import (
 )
 
 type DoubaoChat struct {
-	Api   string
-	Model string
-	Key   string
+	Api      string
+	Key      string
+	Endpoint string
 }
 
 type DoubaoChatResponse struct {
@@ -87,7 +87,7 @@ func (c *DoubaoChat) Chat(_ context.Context, request *ChatRequest) (ChatResponse
 	var buf bytes.Buffer
 	var res DoubaoChatResponse
 
-	request.Model = c.Model
+	request.Model = c.Endpoint
 
 	if err := json.NewEncoder(&buf).Encode(request); err != nil {
 		return ChatResponse{}, err

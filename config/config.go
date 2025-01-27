@@ -31,8 +31,8 @@ type Flow struct {
 type Gpt struct {
 	Provider string `yaml:"provider"`
 	Api      string `yaml:"api"`
-	Model    string `yaml:"model"`
 	Key      string `yaml:"key"`
+	Endpoint string `yaml:"endpoint"`
 }
 
 type Memory struct {

@@ -28,8 +28,8 @@ type Gpt interface {
 type Config struct {
 	Provider string
 	Api      string
-	Model    string
 	Key      string
+	Endpoint string
 }
 
 type ChatRequest struct {
@@ -67,9 +67,9 @@ func New(_ context.Context, cfg *Config) Gpt {
 
 	if cfg.Provider == providerDoubaoChat {
 		gt = &DoubaoChat{
-			Api:   cfg.Api,
-			Model: cfg.Model,
-			Key:   cfg.Key,
+			Api:      cfg.Api,
+			Key:      cfg.Key,
+			Endpoint: cfg.Endpoint,
 		}
 	} else {
 		// BYPASS

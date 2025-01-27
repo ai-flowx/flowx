@@ -24,8 +24,8 @@ var (
 		Gpt: config.Gpt{
 			Provider: "doubao-chat",
 			Api:      "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
-			Model:    "ep-*",
 			Key:      "8429f8ab-*",
+			Endpoint: "ep-*",
 		},
 		Memory: config.Memory{
 			Type: "shortterm",

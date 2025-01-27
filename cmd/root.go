@@ -122,8 +122,8 @@ func initGpt(ctx context.Context, cfg *config.Config) (gpt.Gpt, error) {
 
 	c.Provider = cfg.Gpt.Provider
 	c.Api = cfg.Gpt.Api
-	c.Model = cfg.Gpt.Model
 	c.Key = cfg.Gpt.Key
+	c.Endpoint = cfg.Gpt.Endpoint
 
 	return gpt.New(ctx, c), nil
 }

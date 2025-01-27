@@ -61,8 +61,8 @@ flow:
 gpt:
   provider: doubao-chat
   api: https://ark.cn-beijing.volces.com/api/v3/chat/completions
-  model: ep-*
   key: 8429f8ab-*
+  endpoint: ep-*
 memory:
   type: shortterm
 prompt:

@@ -13,9 +13,9 @@ import (
 
 func initDoubaoChatTest(_ context.Context) DoubaoChat {
 	return DoubaoChat{
-		Api:   "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
-		Model: "ep-*",
-		Key:   "8429f8ab-*",
+		Api:      "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
+		Key:      "8429f8ab-*",
+		Endpoint: "ep-*",
 	}
 }
 
