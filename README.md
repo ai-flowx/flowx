@@ -139,7 +139,6 @@ Project License can be found [here](LICENSE).
 - [crewai](https://github.com/crewAIInc/crewAI)
 - [dockerfile](https://docs.docker.com/reference/dockerfile/)
 - [eino](https://github.com/cloudwego/eino)
-- []()
 - [fabric](https://github.com/danielmiessler/fabric)
 - [langchain-agents](https://www.langchain.com/agents)
 - [langgraph](https://langchain-ai.github.io/langgraph/)
