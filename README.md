@@ -138,6 +138,8 @@ Project License can be found [here](LICENSE).
 - [cobra-cli](https://github.com/spf13/cobra-cli)
 - [crewai](https://github.com/crewAIInc/crewAI)
 - [dockerfile](https://docs.docker.com/reference/dockerfile/)
+- [eino](https://github.com/cloudwego/eino)
+- []()
 - [fabric](https://github.com/danielmiessler/fabric)
 - [langchain-agents](https://www.langchain.com/agents)
 - [langgraph](https://langchain-ai.github.io/langgraph/)
