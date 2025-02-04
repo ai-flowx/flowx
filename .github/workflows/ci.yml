@@ -37,6 +37,7 @@ jobs:
         uses: golangci/golangci-lint-action@v2
         with:
           version: latest
+          args: --timeout=2m
   tests-on-unix:
     needs: golangci-lint
     runs-on: ubuntu-latest
